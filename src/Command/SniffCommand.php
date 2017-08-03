@@ -13,6 +13,7 @@ use Hostnet\Component\CssSniff\Sniff\ClassSniff;
 use Hostnet\Component\CssSniff\Sniff\ColorSniff;
 use Hostnet\Component\CssSniff\Sniff\EmptySniff;
 use Hostnet\Component\CssSniff\Sniff\IdSniff;
+use Hostnet\Component\CssSniff\Sniff\IndentSniff;
 use Hostnet\Component\CssSniff\Sniff\VariableSniff;
 use Hostnet\Component\CssSniff\Sniffer;
 use Symfony\Component\Console\Command\Command;
@@ -64,6 +65,7 @@ final class SniffCommand extends Command
         $sniffer->addSniff(new VariableSniff());
         $sniffer->addSniff(new ColorSniff());
         $sniffer->addSniff(new EmptySniff());
+        $sniffer->addSniff(new IndentSniff());
         $sniffer->process($file);
 
         $output->writeln($this->getFormatter($input->getOption('format'))->format(
