@@ -1,0 +1,27 @@
+{
+    "name":        "hostnet/css-sniffer",
+    "description": "CSS sniffer",
+    "license":     "MIT",
+    "require": {
+        "php":                      ">=7.1",
+        "symfony/console":          "^3.3",
+        "yannickl88/css-tokenizer": "^1.0.0"
+    },
+    "require-dev": {
+        "hostnet/phpcs-tool": "^5.2",
+        "phpunit/phpunit":    "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hostnet\\Component\\CssSniff\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hostnet\\Component\\CssSniff\\": "test/"
+        }
+    },
+    "bin": [
+        "bin/css-sniff"
+    ]
+}
