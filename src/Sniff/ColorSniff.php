@@ -12,6 +12,17 @@ use Yannickl88\Component\CSS\Token;
 
 final class ColorSniff implements SniffInterface
 {
+    private const CSS_RULES = [
+        'color',
+        'background',
+        'border',
+        'border-bottom',
+        'border-left',
+        'border-right',
+        'border-top',
+        'box-shadow',
+    ];
+
     public function register(): array
     {
         return [
@@ -23,7 +34,7 @@ final class ColorSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (false !== strpos($token->chars, 'color')) {
+        if (in_array($token->chars, self::CSS_RULES, true) || 1 === preg_match('/-color$/', $token->chars)) {
             $t = $file->findNext(Token::T_WORD, $stack_ptr + 1);
 
             if (null !== $t && $t->chars[0] === '#' && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)) {

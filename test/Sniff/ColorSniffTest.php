@@ -37,4 +37,28 @@ class ColorSniffTest extends TestCase
             new Violation('Colors should always be 6 characters hex values.', 4, 13, 17),
         ], $file->getViolations());
     }
+
+    public function testSniffVariants()
+    {
+        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/color_variants.less')));
+
+        $this->sniffer->process($file);
+
+        self::assertEquals([
+            new Violation('Colors should always be 6 characters hex values.', 2, 12, 16),
+            new Violation('Colors should always be 6 characters hex values.', 3, 17, 21),
+            new Violation('Colors should always be 6 characters hex values.', 4, 23, 27),
+            new Violation('Colors should always be 6 characters hex values.', 5, 13, 17),
+            new Violation('Colors should always be 6 characters hex values.', 6, 20, 24),
+            new Violation('Colors should always be 6 characters hex values.', 7, 26, 30),
+            new Violation('Colors should always be 6 characters hex values.', 8, 19, 23),
+            new Violation('Colors should always be 6 characters hex values.', 9, 18, 22),
+            new Violation('Colors should always be 6 characters hex values.', 10, 24, 28),
+            new Violation('Colors should always be 6 characters hex values.', 11, 19, 23),
+            new Violation('Colors should always be 6 characters hex values.', 12, 25, 29),
+            new Violation('Colors should always be 6 characters hex values.', 13, 17, 21),
+            new Violation('Colors should always be 6 characters hex values.', 14, 23, 27),
+            new Violation('Colors should always be 6 characters hex values.', 15, 17, 21),
+        ], $file->getViolations());
+    }
 }
