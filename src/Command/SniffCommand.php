@@ -16,6 +16,7 @@ use Hostnet\Component\CssSniff\Sniff\IdSniff;
 use Hostnet\Component\CssSniff\Sniff\IndentSniff;
 use Hostnet\Component\CssSniff\Sniff\VariableSniff;
 use Hostnet\Component\CssSniff\Sniffer;
+use Hostnet\Component\CssSniff\Standard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -34,6 +35,12 @@ final class SniffCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'Type of output format, default: console',
                 'console'
+            )
+            ->addOption(
+                'standard',
+                's',
+                InputOption::VALUE_OPTIONAL,
+                'Code Standard to use, by default the Hostnet standard is used. This is the path to the xml file.'
             )
             ->addOption('pretty', 'p', InputOption::VALUE_NONE, 'Pretty format output')
             ->addOption(
@@ -60,14 +67,10 @@ final class SniffCommand extends Command
         }
 
         $file = new File((new Tokenizer())->tokenize($contents));
+        $standard = Standard::loadFromXmlFile($input->getOption('standard') ?? __DIR__ . '/../Standard/Hostnet.xml');
 
         $sniffer = new Sniffer();
-        $sniffer->addSniff(new ClassSniff());
-        $sniffer->addSniff(new IdSniff());
-        $sniffer->addSniff(new VariableSniff());
-        $sniffer->addSniff(new ColorSniff());
-        $sniffer->addSniff(new EmptySniff());
-        $sniffer->addSniff(new IndentSniff());
+        $sniffer->loadStandard($standard);
         $sniffer->process($file);
 
         $output->writeln($this->getFormatter($input->getOption('format'))->format(

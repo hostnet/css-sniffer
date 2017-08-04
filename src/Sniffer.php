@@ -31,6 +31,13 @@ final class Sniffer
         }
     }
 
+    public function loadStandard(Standard $standard): void
+    {
+        foreach ($standard->getSniffs() as $sniff) {
+            $this->addSniff($sniff);
+        }
+    }
+
     /**
      * Process a file with all the registered sniffs. This will add violations
      * if there are any.

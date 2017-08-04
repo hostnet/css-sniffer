@@ -11,6 +11,13 @@ use Yannickl88\Component\CSS\Token;
 
 final class ClassSniff implements SniffInterface
 {
+    private $syntax;
+
+    public function __construct(string $syntax = '[a-z0-9-]+')
+    {
+        $this->syntax = $syntax;
+    }
+
     public function register(): array
     {
         return [
@@ -28,7 +35,7 @@ final class ClassSniff implements SniffInterface
             $start = $token->offsets[0] + strlen($matches[1]);
 
             foreach ($classes as $class) {
-                if (1 !== preg_match('/^[a-z0-9-]+$/', $class)) {
+                if (1 !== preg_match('/^' . $this->syntax . '$/', $class)) {
                     $file->addViolation(
                         'Class should only contain a-z, 0-9 and -.',
                         $token->lines[0],
