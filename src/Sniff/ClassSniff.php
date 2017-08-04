@@ -22,7 +22,7 @@ final class ClassSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (1 === preg_match('/^[&]?\./', $token->chars) && 1 !== preg_match('/^\.[a-z0-9-]+$/', $token->chars)) {
+        if (1 === preg_match('/^[&]?\./', $token->chars) && 1 !== preg_match('/^[&]?\.[a-z0-9-]+$/', $token->chars)) {
             $file->addViolation(
                 'Class should only contain a-z, 0-9 and -.',
                 $token->lines[0],
