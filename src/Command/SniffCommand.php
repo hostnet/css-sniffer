@@ -59,10 +59,6 @@ final class SniffCommand extends Command
             $contents = '';
         }
 
-        if (empty($contents)) {
-            throw new \RuntimeException('Empty input.');
-        }
-
         $file = new File((new Tokenizer())->tokenize($contents));
 
         $sniffer = new Sniffer();

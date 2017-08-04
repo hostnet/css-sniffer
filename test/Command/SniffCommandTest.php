@@ -48,15 +48,16 @@ class SniffCommandTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Empty input.
-     */
     public function testExecuteEmptyInput()
     {
-        $input  = new ArrayInput(['file' => __DIR__ . '/empty.less']);
-        $output = new NullOutput();
+        $input  = new ArrayInput(['--format' => 'json', 'file' => __DIR__ . '/empty.less']);
+        $output = new BufferedOutput();
 
         $this->sniff_command->run($input, $output);
+
+        self::assertEquals(
+            "[]\n",
+            $output->fetch()
+        );
     }
 }
