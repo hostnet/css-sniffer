@@ -90,7 +90,7 @@ $ bin/css-sniff sniff --format=json -p test/Sniff/fixtures/quotes.less
 ### `STDIN` input
 The sniffer can also read from the `STDIN`. This can be usefull when intergrating the tool in an IDE where you might not have a file but want to pass the contents of an editor.
 ```
-$cat test/Sniff/fixtures/quotes.less | bin/css-sniff --format=json -p
+$ cat test/Sniff/fixtures/quotes.less | bin/css-sniff --format=json -p
 [
     {
         "msg": "Text should use \" as quotes.",
