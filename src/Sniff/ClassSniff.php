@@ -46,7 +46,6 @@ final class ClassSniff implements SniffInterface
 
                 $start += 1 + strlen($class);
             }
-
         }
     }
 }

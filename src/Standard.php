@@ -1,5 +1,8 @@
 <?php
-
+declare(strict_types=1);
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 namespace Hostnet\Component\CssSniff;
 
 class Standard
@@ -20,7 +23,7 @@ class Standard
         }
 
         $standard = new self(basename($file, '.xml'));
-        $xml = new \SimpleXMLElement(file_get_contents($file));
+        $xml      = new \SimpleXMLElement(file_get_contents($file));
 
         foreach ($xml->xpath('/csssniffer/sniff') as $sniff_data) {
             if (!isset($sniff_data->attributes()['class'])) {
@@ -28,7 +31,7 @@ class Standard
             }
 
             $class = $sniff_data->attributes()['class']->__toString();
-            $args = array_map(function (\SimpleXMLElement $e) {
+            $args  = array_map(function (\SimpleXMLElement $e) {
                 return $e->__toString();
             }, $sniff_data->xpath('/arg'));
 

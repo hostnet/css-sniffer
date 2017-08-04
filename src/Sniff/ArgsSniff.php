@@ -20,8 +20,8 @@ final class ArgsSniff implements SniffInterface
 
     public function process(File $file, int $stack_ptr): void
     {
-        $c = 0;
-        $i = $stack_ptr + 1;
+        $c     = 0;
+        $i     = $stack_ptr + 1;
         $token = $file->getTokens();
 
         do {

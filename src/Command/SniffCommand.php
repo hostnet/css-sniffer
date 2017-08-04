@@ -66,7 +66,7 @@ final class SniffCommand extends Command
             $contents = '';
         }
 
-        $file = new File((new Tokenizer())->tokenize($contents));
+        $file     = new File((new Tokenizer())->tokenize($contents));
         $standard = Standard::loadFromXmlFile($input->getOption('standard') ?? __DIR__ . '/../Standard/Hostnet.xml');
 
         $sniffer = new Sniffer();
