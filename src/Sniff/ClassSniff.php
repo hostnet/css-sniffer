@@ -22,13 +22,24 @@ final class ClassSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (1 === preg_match('/^[&]?\./', $token->chars) && 1 !== preg_match('/^[&]?\.[a-z0-9-]+$/', $token->chars)) {
-            $file->addViolation(
-                'Class should only contain a-z, 0-9 and -.',
-                $token->lines[0],
-                $token->offsets[0],
-                $token->offsets[0] + strlen($token->chars)
-            );
+        if (1 === preg_match('/^([&]?)(\..*)$/', $token->chars, $matches)) {
+            $classes = array_slice(explode('.', $matches[2]), 1);
+
+            $start = $token->offsets[0] + strlen($matches[1]);
+
+            foreach ($classes as $class) {
+                if (1 !== preg_match('/^[a-z0-9-]+$/', $class)) {
+                    $file->addViolation(
+                        'Class should only contain a-z, 0-9 and -.',
+                        $token->lines[0],
+                        $start,
+                        $start + 1 + strlen($class)
+                    );
+                }
+
+                $start += 1 + strlen($class);
+            }
+
         }
     }
 }
