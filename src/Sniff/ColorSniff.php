@@ -26,7 +26,7 @@ final class ColorSniff implements SniffInterface
         if (false !== strpos($token->chars, 'color')) {
             $t = $file->findNext(Token::T_WORD, $stack_ptr + 1);
 
-            if ($t->chars[0] === '#' && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)) {
+            if (null !== $t && $t->chars[0] === '#' && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)) {
                 $file->addViolation(
                     'Colors should always be 6 characters hex values.',
                     $t->lines[0],

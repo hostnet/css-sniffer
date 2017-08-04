@@ -23,7 +23,7 @@ final class EmptySniff implements SniffInterface
     {
         $next = $file->findNextNot(Token::T_WHITESPACE, $stack_ptr + 1);
 
-        if ($next->type === Token::T_CLOSECURLY) {
+        if (null !== $next && $next->type === Token::T_CLOSECURLY) {
             $file->addViolation(
                 'CSS block should not be empty.',
                 $next->lines[0],
