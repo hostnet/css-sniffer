@@ -60,4 +60,17 @@ class SniffCommandTest extends TestCase
             $output->fetch()
         );
     }
+
+    public function testExecuteErrorInput()
+    {
+        $input  = new ArrayInput(['--format' => 'json', 'file' => __DIR__ . '/error.less']);
+        $output = new BufferedOutput();
+
+        $this->sniff_command->run($input, $output);
+
+        self::assertEquals(
+            "null\n",
+            $output->fetch()
+        );
+    }
 }

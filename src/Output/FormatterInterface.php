@@ -15,4 +15,11 @@ interface FormatterInterface
      * @return string
      */
     public function format(array $violations, bool $pretty = false): string;
+
+    /**
+     * @param mixed $error
+     * @param bool  $pretty
+     * @return string
+     */
+    public function formatError($error, bool $pretty = false): string;
 }

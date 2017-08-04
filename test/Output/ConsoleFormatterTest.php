@@ -30,4 +30,12 @@ class ConsoleFormatterTest extends TestCase
             $this->console_formatter->format([new Violation('foobar', 1)])
         );
     }
+
+    public function testFormatError()
+    {
+        self::assertSame(
+            '',
+            $this->console_formatter->formatError('Some Error')
+        );
+    }
 }

@@ -24,4 +24,9 @@ final class ConsoleFormatter implements FormatterInterface
 
         return $out;
     }
+
+    public function formatError($error, bool $pretty = false): string
+    {
+        return '';
+    }
 }

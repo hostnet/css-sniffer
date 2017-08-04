@@ -30,4 +30,12 @@ class JsonFormatterTest extends TestCase
             $this->json_formatter->format([new Violation('foobar', 1)])
         );
     }
+
+    public function testFormatError()
+    {
+        self::assertSame(
+            '"Some Error"',
+            $this->json_formatter->formatError('Some Error')
+        );
+    }
 }

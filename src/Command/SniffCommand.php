@@ -66,14 +66,21 @@ final class SniffCommand extends Command
             $contents = '';
         }
 
-        $file     = new File((new Tokenizer())->tokenize($contents));
+        $formatter = $this->getFormatter($input->getOption('format'));
+
+        try {
+            $file = new File((new Tokenizer())->tokenize($contents));
+        } catch (\RuntimeException $e) {
+            $output->writeln($formatter->formatError(null, $input->getOption('pretty')));
+            return 0;
+        }
         $standard = Standard::loadFromXmlFile($input->getOption('standard') ?? __DIR__ . '/../Standard/Hostnet.xml');
 
         $sniffer = new Sniffer();
         $sniffer->loadStandard($standard);
         $sniffer->process($file);
 
-        $output->writeln($this->getFormatter($input->getOption('format'))->format(
+        $output->writeln($formatter->format(
             $file->getViolations(),
             $input->getOption('pretty')
         ));

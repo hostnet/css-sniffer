@@ -34,4 +34,9 @@ final class JsonFormatter implements FormatterInterface
             ];
         }, $violations), $pretty ? JSON_PRETTY_PRINT : 0);
     }
+
+    public function formatError($error, bool $pretty = false): string
+    {
+        return json_encode($error, $pretty ? JSON_PRETTY_PRINT : 0);
+    }
 }
