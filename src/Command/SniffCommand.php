@@ -36,6 +36,12 @@ final class SniffCommand extends Command
                 'console'
             )
             ->addOption('pretty', 'p', InputOption::VALUE_NONE, 'Pretty format output')
+            ->addOption(
+                'no-exit-code',
+                null,
+                InputOption::VALUE_NONE,
+                'Always return 0 as exit code, regardless of the result'
+            )
             ->addArgument('file', null, 'Input file')
             ->setDescription('Sniffs the given input file and returns the result.');
     }
@@ -73,7 +79,7 @@ final class SniffCommand extends Command
             $input->getOption('pretty')
         ));
 
-        return $file->isOk() ? 0 : 1;
+        return $input->getOption('no-exit-code') || $file->isOk() ? 0 : 1;
     }
 
     private function getFormatter(string $type): FormatterInterface
