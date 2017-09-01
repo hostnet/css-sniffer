@@ -23,7 +23,7 @@ final class VariableSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (1 !== preg_match('/^@[a-z0-9_-]+$/', $token->chars)) {
+        if (1 !== preg_match('/^@[a-z0-9_-]*$/', $token->chars)) {
             $file->addViolation(
                 'Variable should only contain a-z, 0-9, _ and -.',
                 $token->lines[0],
