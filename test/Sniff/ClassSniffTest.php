@@ -39,4 +39,13 @@ class ClassSniffTest extends TestCase
             new Violation('Class should only contain a-z, 0-9 and -.', 5, 7, 16),
         ], $file->getViolations());
     }
+
+    public function testSniffWithVariables()
+    {
+        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/generated_class.less')));
+
+        $this->sniffer->process($file);
+
+        self::assertEmpty($file->getViolations());
+    }
 }
