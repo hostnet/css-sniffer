@@ -35,7 +35,7 @@ final class ClassSniff implements SniffInterface
             $start = $token->offsets[0] + strlen($matches[1]);
 
             foreach ($classes as $class) {
-                if (1 !== preg_match('/^' . $this->syntax . '$/', $class)) {
+                if (!empty($class) && 1 !== preg_match('/^' . $this->syntax . '$/', $class)) {
                     $file->addViolation(
                         'Class should only contain a-z, 0-9 and -.',
                         $token->lines[0],
