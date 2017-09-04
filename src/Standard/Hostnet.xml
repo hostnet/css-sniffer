@@ -4,6 +4,7 @@
         <arg>[a-z0-9-]+</arg>
     </sniff>
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ColorSniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\CurlySniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptySniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IdSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IndentSniff" />
