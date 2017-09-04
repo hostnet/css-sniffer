@@ -9,5 +9,6 @@
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IdSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IndentSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\QuoteTypeSniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\SemicolonSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\VariableSniff" />
 </csssniffer>
