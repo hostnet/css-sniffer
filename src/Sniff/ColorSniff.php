@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @copyright 2015-2017 Hostnet B.V.
+ * @copyright 2017 Hostnet B.V.
  */
 
 namespace Hostnet\Component\CssSniff\Sniff;
