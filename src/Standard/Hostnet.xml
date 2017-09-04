@@ -5,6 +5,7 @@
     </sniff>
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ColorSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\CurlySniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyCommentSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptySniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IdSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IndentSniff" />
