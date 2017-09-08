@@ -40,6 +40,8 @@ class CurlySniffTest extends TestCase
             new Violation('Closing curly bracket should be proceeded by only one space.', 8, 27, 28),
             new Violation('Multiple statements found on one line.', 9, 13, 57),
             new Violation('One statements found and should be on one line.', 10, 13, 14),
+            new Violation('Media query should always be one multiple lines.', 30, 50, 51),
+            new Violation('Media query should always be one multiple lines.', 31, 52, 53),
         ], $file->getViolations());
     }
 }
