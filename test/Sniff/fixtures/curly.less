@@ -11,3 +11,21 @@
     color: #ffffff;
 }
 .ignore {}
+.valid { background-@{property}: #999; }
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .good {}
+}
+@media only screen and (min-device-width: @{size}) {
+    .good {}
+}
+@media @smartphones {
+    .good {}
+}
+.nested {
+    color: red;
+    @media only screen and (min-device-width: 320px) {
+        .good {}
+    }
+}
+@media only screen and (min-device-width: 320px) {.bad {}}
+@media only screen and (min-device-width: @{size}) {.bad {}}

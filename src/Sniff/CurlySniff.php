@@ -20,16 +20,37 @@ final class CurlySniff implements SniffInterface
 
     public function process(File $file, int $stack_ptr): void
     {
+        [$is_part_of_variable] = $this->isPartOfVariable($file->getTokens(), $stack_ptr);
+
+        if ($is_part_of_variable) {
+            return;
+        }
+
         $token = $file->get($stack_ptr);
 
         // do we have one line?
-        [$contains_returns, $contains_multiple_statements, $closing_curly_index] = $this->isOneLine($file, $stack_ptr);
+        [
+            $contains_returns,
+            $contains_multiple_statements,
+            $is_media_query,
+            $closing_curly_index
+        ] = $this->isOneLine($file, $stack_ptr);
 
         $last_token = $file->get($closing_curly_index);
 
         // One line
         if (!$contains_returns) {
             if ($contains_multiple_statements) {
+                if ($is_media_query) {
+                    $file->addViolation(
+                        'Media query should always be one multiple lines.',
+                        $token->lines[0],
+                        $token->offsets[0],
+                        $token->offsets[0] + strlen($token->chars)
+                    );
+                    return;
+                }
+
                 $file->addViolation(
                     'Multiple statements found on one line.',
                     $token->lines[0],
@@ -68,6 +89,10 @@ final class CurlySniff implements SniffInterface
                 );
             }
         } elseif (!$contains_multiple_statements) {
+            if ($is_media_query) {
+                return;
+            }
+
             // Multiple lines
             $file->addViolation(
                 'One statements found and should be on one line.',
@@ -91,6 +116,7 @@ final class CurlySniff implements SniffInterface
         $contains_multiple_statements = false;
         $closing_curly_index          = $i;
 
+        // Look ahead.
         do {
             $next = $tokens[$i];
 
@@ -99,6 +125,7 @@ final class CurlySniff implements SniffInterface
                 if ($c > 0) {
                     $c--;
                     $i++;
+                    $contains_multiple_statements = true;
 
                     continue;
                 }
@@ -110,9 +137,15 @@ final class CurlySniff implements SniffInterface
 
             // Open { will raise the level.
             if ($next->type === Token::T_OPENCURLY) {
-                $c++;
-                $i++;
+                // was it a variable?
+                [$is_part_of_variable, $start, $end] = $this->isPartOfVariable($tokens, $i);
 
+                if ($is_part_of_variable) {
+                    $i = $end + 1;
+                } else {
+                    $c++;
+                    $i++;
+                }
                 continue;
             }
 
@@ -122,12 +155,74 @@ final class CurlySniff implements SniffInterface
 
             if ($next->type === Token::T_SEMICOLON) {
                 $contains_multiple_statements = $seen_semicolon;
-                $seen_semicolon = true;
+                $seen_semicolon               = true;
             }
 
             $i++;
         } while ($i < $n);
 
-        return [$contains_returns, $contains_multiple_statements, $closing_curly_index];
+        $i    = $stack_ptr - 1;
+        $line = '';
+
+        // Look behind.
+        do {
+            $prev = $tokens[$i];
+
+            if (in_array($prev->type, [Token::T_SEMICOLON, Token::T_COMMENT], true)) {
+                break;
+            }
+            if (in_array($prev->type, [Token::T_CLOSECURLY, Token::T_OPENCURLY], true)) {
+                [$is_part_of_variable, $start, $end] = $this->isPartOfVariable($tokens, $i);
+
+                if ($is_part_of_variable) {
+                    $i = $start - 1;
+
+                    for (; $end >= $start; $end--) {
+                        $line = $tokens[$end]->chars . $line;
+                    }
+                    continue;
+                }
+                break;
+            }
+
+            $line = $prev->chars . $line;
+
+            $i--;
+        } while ($i > 0);
+
+        return [
+            $contains_returns,
+            $contains_multiple_statements,
+            1 === preg_match('/^@media\s/', trim($line)),
+            $closing_curly_index
+        ];
+    }
+
+    private function isPartOfVariable(array $tokens, int $stack_ptr): array
+    {
+        $curly_open = $stack_ptr;
+
+        while ($tokens[$curly_open]->type !== Token::T_OPENCURLY && $curly_open > 0) {
+            $curly_open--;
+        }
+
+        $prev = $tokens[$curly_open - 1];
+
+        if ($prev->type !== Token::T_ATWORD) {
+            // Not part of variable.
+            return [false, null, null];
+        }
+
+        $i = $curly_open + 1;
+        $n = count($tokens);
+        do {
+            if ($tokens[$i]->type === Token::T_CLOSECURLY) {
+                return [true, $curly_open - 1, $i];
+            }
+
+            $i++;
+        } while ($i < $n);
+
+        return [false, null, null];
     }
 }
