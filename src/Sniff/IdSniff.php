@@ -23,13 +23,22 @@ final class IdSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if ($token->chars[0] === '#' && 1 !== preg_match('/^\#[a-z0-9-]+$/', $token->chars)) {
-            $file->addViolation(
-                'Id should only contain a-z, 0-9 and -.',
-                $token->lines[0],
-                $token->offsets[0],
-                $token->offsets[0] + strlen($token->chars)
-            );
+        if ($token->chars[0] === '#') {
+            $id = $token->chars;
+
+            // is there a class?
+            if (false !== ($i = strpos($id, '.'))) {
+                $id = substr($id, 0, $i);
+            }
+
+            if (1 !== preg_match('/^\#[a-z0-9-]+$/', $id)) {
+                $file->addViolation(
+                    'Id should only contain a-z, 0-9 and -.',
+                    $token->lines[0],
+                    $token->offsets[0],
+                    $token->offsets[0] + strlen($id)
+                );
+            }
         }
     }
 }

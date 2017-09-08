@@ -37,6 +37,7 @@ class ClassSniffTest extends TestCase
             new Violation('Class should only contain a-z, 0-9 and -.', 1, 1, 10),
             new Violation('Class should only contain a-z, 0-9 and -.', 2, 1, 9),
             new Violation('Class should only contain a-z, 0-9 and -.', 5, 7, 16),
+            new Violation('Class should only contain a-z, 0-9 and -.', 7, 9, 19),
         ], $file->getViolations());
     }
 
