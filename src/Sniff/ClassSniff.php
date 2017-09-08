@@ -32,20 +32,27 @@ final class ClassSniff implements SniffInterface
         if (1 === preg_match('/^([&]?)(\..*)$/', $token->chars, $matches)) {
             $classes = array_slice(explode('.', $matches[2]), 1);
 
-            $start = $token->offsets[0] + strlen($matches[1]);
+            $this->checkClasses($file, $token->lines[0], $token->offsets[0] + strlen($matches[1]), $classes);
+        } elseif (1 === preg_match('/^(#[^\.]+)(\..*)$/', $token->chars, $matches)) {
+            $classes = array_slice(explode('.', $matches[2]), 1);
 
-            foreach ($classes as $class) {
-                if (!empty($class) && 1 !== preg_match('/^' . $this->syntax . '$/', $class)) {
-                    $file->addViolation(
-                        'Class should only contain a-z, 0-9 and -.',
-                        $token->lines[0],
-                        $start,
-                        $start + 1 + strlen($class)
-                    );
-                }
+            $this->checkClasses($file, $token->lines[0], $token->offsets[0] + strlen($matches[1]), $classes);
+        }
+    }
 
-                $start += 1 + strlen($class);
+    private function checkClasses(File $file, int $line, int $start, array $classes): void
+    {
+        foreach ($classes as $class) {
+            if (!empty($class) && 1 !== preg_match('/^' . $this->syntax . '$/', $class)) {
+                $file->addViolation(
+                    'Class should only contain a-z, 0-9 and -.',
+                    $line,
+                    $start,
+                    $start + 1 + strlen($class)
+                );
             }
+
+            $start += 1 + strlen($class);
         }
     }
 }
