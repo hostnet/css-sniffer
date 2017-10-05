@@ -30,7 +30,8 @@ final class QuoteTypeSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        // Ignore backticks
+        // Ignore backticks since it is inline JavaScript.
+        // @see https://www.bennadel.com/blog/2638-executing-javascript-in-the-less-css-precompiler.htm
         if ($token->chars[0] === '`') {
             return;
         }
