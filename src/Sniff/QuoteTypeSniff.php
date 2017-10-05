@@ -30,6 +30,12 @@ final class QuoteTypeSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
+        // Ignore backticks since it is inline JavaScript.
+        // @see https://www.bennadel.com/blog/2638-executing-javascript-in-the-less-css-precompiler.htm
+        if ($token->chars[0] === '`') {
+            return;
+        }
+
         if ($token->chars[0] !== $this->quote || $token->chars[strlen($token->chars) - 1] !== $this->quote) {
             $file->addViolation(
                 sprintf('Text should use %s as quotes.', $this->quote),
