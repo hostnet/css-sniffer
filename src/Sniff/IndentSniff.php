@@ -26,36 +26,27 @@ final class IndentSniff implements SniffInterface
         if (false !== strpos($token->chars, "\t")) {
             $file->addViolation(
                 'Line contains tabs, use only spaces.',
-                $token->lines[0]
+                $token->lines[1]
             );
 
             return;
         }
 
-        if (1 === preg_match('/[\n\r\f]+/', $token->chars)) {
-            $parts = preg_split('/[\n\r\f]+/', $token->chars);
+        if (1 !== preg_match('/[\n\r\f]+/', $token->chars)) {
+            return;
+        }
 
-            for ($i = 0, $n = count($parts); $i < $n; $i++) {
-                if (strlen($parts[$i]) % 4 !== 0) {
-                    $file->addViolation(
-                        sprintf(
-                            'Line not indented correctly, expected %s, got %s.',
-                            ceil(strlen($parts[$i]) / 4) * 4,
-                            strlen($parts[$i])
-                        ),
-                        $token->lines[0] + $i - 1
-                    );
-                }
-            }
-        } elseif ($token->offsets[0] === 0) {
-            if (strlen($token->chars) % 4 !== 0) {
+        $parts = preg_split('/[\n\r\f]+/', $token->chars);
+
+        for ($i = 0, $n = count($parts); $i < $n; $i++) {
+            if (strlen($parts[$i]) % 4 !== 0) {
                 $file->addViolation(
                     sprintf(
                         'Line not indented correctly, expected %s, got %s.',
-                        ceil(strlen($token->chars) / 4) * 4,
-                        strlen($token->chars)
+                        ceil(strlen($parts[$i]) / 4) * 4,
+                        strlen($parts[$i])
                     ),
-                    $token->lines[0]
+                    $token->lines[0] + $i
                 );
             }
         }

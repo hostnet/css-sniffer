@@ -34,7 +34,7 @@ class EmptyLinesSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('More than two new lines found.', 6),
+            new Violation('More than two new lines found.', 3),
         ], $file->getViolations());
     }
 }

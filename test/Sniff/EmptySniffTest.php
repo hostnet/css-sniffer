@@ -35,8 +35,8 @@ class EmptySniffTest extends TestCase
 
         self::assertEquals([
             new Violation('CSS block should not be empty.', 1, 9, 10),
-            new Violation('CSS block should not be empty.', 4, 2, 3),
-            new Violation('CSS block should not be empty.', 11, 6, 7),
+            new Violation('CSS block should not be empty.', 4, 1, 2),
+            new Violation('CSS block should not be empty.', 11, 1, 2),
         ], $file->getViolations());
     }
 }
