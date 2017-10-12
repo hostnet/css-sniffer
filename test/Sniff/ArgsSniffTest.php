@@ -34,8 +34,8 @@ class ArgsSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Comma should be followed by 1 and no more spaces.', 2, 10, 11),
-            new Violation('Comma should be followed by 1 and no more spaces.', 3, 10, 11),
+            new Violation(ArgsSniff::class, 'Comma should be followed by 1 and no more spaces.', 2, 10, 11),
+            new Violation(ArgsSniff::class, 'Comma should be followed by 1 and no more spaces.', 3, 10, 11),
         ], $file->getViolations());
     }
 }

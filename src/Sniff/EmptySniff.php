@@ -25,6 +25,7 @@ final class EmptySniff implements SniffInterface
 
         if (null !== $next && $next->type === Token::T_CLOSECURLY) {
             $file->addViolation(
+                self::class,
                 'CSS block should not be empty.',
                 $next->lines[0],
                 $next->offsets[0],

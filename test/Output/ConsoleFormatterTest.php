@@ -27,7 +27,7 @@ class ConsoleFormatterTest extends TestCase
     {
         self::assertSame(
             'foobar At line 1:0.',
-            $this->console_formatter->format([new Violation('foobar', 1)])
+            $this->console_formatter->format([new Violation('phpunit', 'foobar', 1)])
         );
     }
 

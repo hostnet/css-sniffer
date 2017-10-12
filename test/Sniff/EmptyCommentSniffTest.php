@@ -34,9 +34,9 @@ class EmptyCommentSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Empty comment.', 3, 1, 3),
-            new Violation('Empty comment.', 7, 1, 3),
-            new Violation('Empty comment.', 10, 1, 3),
+            new Violation(EmptyCommentSniff::class, 'Empty comment.', 3, 1, 3),
+            new Violation(EmptyCommentSniff::class, 'Empty comment.', 7, 1, 3),
+            new Violation(EmptyCommentSniff::class, 'Empty comment.', 10, 1, 3),
         ], $file->getViolations());
     }
 }

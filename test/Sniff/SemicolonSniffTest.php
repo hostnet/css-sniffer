@@ -34,7 +34,7 @@ class SemicolonSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Duplicate semicolon.', 2, 19, 20),
+            new Violation(SemicolonSniff::class, 'Duplicate semicolon.', 2, 19, 20),
         ], $file->getViolations());
     }
 }

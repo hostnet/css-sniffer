@@ -34,8 +34,8 @@ class IndentSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Line not indented correctly, expected 4, got 2.', 5, 0, -1),
-            new Violation('Line contains tabs, use only spaces.', 8, 0, -1),
+            new Violation(IndentSniff::class, 'Line not indented correctly, expected 4, got 2.', 5, 0, -1),
+            new Violation(IndentSniff::class, 'Line contains tabs, use only spaces.', 8, 0, -1),
         ], $file->getViolations());
     }
 }

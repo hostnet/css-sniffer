@@ -52,6 +52,7 @@ final class ArgsSniff implements SniffInterface
 
                 if ($next_space->chars !== ' ') {
                     $file->addViolation(
+                        self::class,
                         'Comma should be followed by 1 and no more spaces.',
                         $next->lines[0],
                         $next->offsets[0],

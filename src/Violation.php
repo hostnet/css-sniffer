@@ -15,13 +15,26 @@ final class Violation
     private $line;
     private $start;
     private $end;
+    private $source;
 
-    public function __construct(string $msg, int $line, int $start = 0, int $end = -1)
+    public function __construct(string $source, string $msg, int $line, int $start = 0, int $end = -1)
     {
-        $this->msg   = $msg;
-        $this->line  = $line;
-        $this->start = $start;
-        $this->end   = $end;
+        $this->source = $source;
+        $this->msg    = $msg;
+        $this->line   = $line;
+        $this->start  = $start;
+        $this->end    = $end;
+    }
+
+    /**
+     * Return the source of the violation. This is usually the class name of
+     * the sniffer.
+     *
+     * @return string
+     */
+    public function getSource(): string
+    {
+        return $this->source;
     }
 
     /**

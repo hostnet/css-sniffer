@@ -33,6 +33,7 @@ final class IdSniff implements SniffInterface
 
             if (1 !== preg_match('/^\#[a-z0-9-]+$/', $id)) {
                 $file->addViolation(
+                    self::class,
                     'Id should only contain a-z, 0-9 and -.',
                     $token->lines[0],
                     $token->offsets[0],

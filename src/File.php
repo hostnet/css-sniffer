@@ -92,14 +92,15 @@ final class File
     /**
      * Add a violation to this file.
      *
+     * @param string $source
      * @param string $msg
      * @param int    $line
      * @param int    $start
      * @param int    $end
      */
-    public function addViolation(string $msg, int $line, int $start = 0, int $end = -1): void
+    public function addViolation(string $source, string $msg, int $line, int $start = 0, int $end = -1): void
     {
-        $this->violations[] = new Violation($msg, $line, $start, $end);
+        $this->violations[] = new Violation($source, $msg, $line, $start, $end);
     }
 
     /**

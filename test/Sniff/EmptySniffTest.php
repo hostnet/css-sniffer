@@ -34,9 +34,9 @@ class EmptySniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('CSS block should not be empty.', 1, 9, 10),
-            new Violation('CSS block should not be empty.', 4, 1, 2),
-            new Violation('CSS block should not be empty.', 11, 1, 2),
+            new Violation(EmptySniff::class, 'CSS block should not be empty.', 1, 9, 10),
+            new Violation(EmptySniff::class, 'CSS block should not be empty.', 4, 1, 2),
+            new Violation(EmptySniff::class, 'CSS block should not be empty.', 11, 1, 2),
         ], $file->getViolations());
     }
 }

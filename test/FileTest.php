@@ -32,8 +32,8 @@ class FileTest extends TestCase
         self::assertSame($token_3, $file->findNextNot(Token::T_WHITESPACE, 1));
         self::assertSame($token_2, $file->findNextNot(Token::T_WORD, 1));
         self::assertTrue($file->isOk());
-        $file->addViolation('foobar', 1);
-        self::assertEquals([new Violation('foobar', 1)], $file->getViolations());
+        $file->addViolation('phpunit', 'foobar', 1);
+        self::assertEquals([new Violation('phpunit', 'foobar', 1)], $file->getViolations());
         self::assertFalse($file->isOk());
     }
 }

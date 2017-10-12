@@ -38,6 +38,7 @@ final class QuoteTypeSniff implements SniffInterface
 
         if ($token->chars[0] !== $this->quote || $token->chars[strlen($token->chars) - 1] !== $this->quote) {
             $file->addViolation(
+                self::class,
                 sprintf('Text should use %s as quotes.', $this->quote),
                 $token->lines[0],
                 $token->offsets[0],

@@ -45,6 +45,7 @@ final class ClassSniff implements SniffInterface
         foreach ($classes as $class) {
             if (!empty($class) && 1 !== preg_match('/^' . $this->syntax . '$/', $class)) {
                 $file->addViolation(
+                    self::class,
                     'Class should only contain a-z, 0-9 and -.',
                     $line,
                     $start,

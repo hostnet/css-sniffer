@@ -39,6 +39,7 @@ final class ColorSniff implements SniffInterface
 
             if (null !== $t && $t->chars[0] === '#' && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)) {
                 $file->addViolation(
+                    self::class,
                     'Colors should always be 6 characters hex values.',
                     $t->lines[0],
                     $t->offsets[0],

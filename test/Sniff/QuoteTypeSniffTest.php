@@ -34,7 +34,7 @@ class QuoteTypeSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Text should use " as quotes.', 5, 27, 37),
+            new Violation(QuoteTypeSniff::class, 'Text should use " as quotes.', 5, 27, 37),
         ], $file->getViolations());
     }
 }

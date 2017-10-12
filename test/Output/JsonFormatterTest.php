@@ -27,7 +27,7 @@ class JsonFormatterTest extends TestCase
     {
         self::assertSame(
             '[{"msg":"foobar","line":1,"start":0,"end":-1}]',
-            $this->json_formatter->format([new Violation('foobar', 1)])
+            $this->json_formatter->format([new Violation('phpunit', 'foobar', 1)])
         );
     }
 

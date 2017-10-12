@@ -32,7 +32,10 @@ class SniffCommandTest extends TestCase
 
         $this->sniff_command->run($input, $output);
 
-        self::assertEquals("Colors should always be 6 characters hex values. At line 2:12.\n", $output->fetch());
+        self::assertEquals(
+            'Colors should always be 6 characters hex values. At line 2:12.' . PHP_EOL,
+            $output->fetch()
+        );
     }
 
     public function testExecuteJsonOutput()
@@ -43,7 +46,7 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            "[{\"msg\":\"Colors should always be 6 characters hex values.\",\"line\":2,\"start\":12,\"end\":16}]\n",
+            '[{"msg":"Colors should always be 6 characters hex values.","line":2,"start":12,"end":16}]' . PHP_EOL,
             $output->fetch()
         );
     }
@@ -56,7 +59,7 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            "[]\n",
+            '[]' . PHP_EOL,
             $output->fetch()
         );
     }
@@ -69,7 +72,7 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            "null\n",
+            'null' . PHP_EOL,
             $output->fetch()
         );
     }

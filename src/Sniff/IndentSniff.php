@@ -25,6 +25,7 @@ final class IndentSniff implements SniffInterface
         // did we use spaces?
         if (false !== strpos($token->chars, "\t")) {
             $file->addViolation(
+                self::class,
                 'Line contains tabs, use only spaces.',
                 $token->lines[1]
             );
@@ -41,6 +42,7 @@ final class IndentSniff implements SniffInterface
         for ($i = 0, $n = count($parts); $i < $n; $i++) {
             if (strlen($parts[$i]) % 4 !== 0) {
                 $file->addViolation(
+                    self::class,
                     sprintf(
                         'Line not indented correctly, expected %s, got %s.',
                         ceil(strlen($parts[$i]) / 4) * 4,

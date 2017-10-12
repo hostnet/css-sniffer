@@ -14,7 +14,7 @@ class ViolationTest extends TestCase
 {
     public function testGeneric()
     {
-        $violation = new Violation('foobar', 1, 2, 3);
+        $violation = new Violation('phpunit', 'foobar', 1, 2, 3);
 
         self::assertSame('foobar', $violation->getMsg());
         self::assertSame(1, $violation->getLine());

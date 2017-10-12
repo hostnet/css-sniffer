@@ -34,9 +34,9 @@ class IdSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Id should only contain a-z, 0-9 and -.', 1, 1, 10),
-            new Violation('Id should only contain a-z, 0-9 and -.', 2, 1, 9),
-            new Violation('Id should only contain a-z, 0-9 and -.', 5, 1, 10),
+            new Violation(IdSniff::class, 'Id should only contain a-z, 0-9 and -.', 1, 1, 10),
+            new Violation(IdSniff::class, 'Id should only contain a-z, 0-9 and -.', 2, 1, 9),
+            new Violation(IdSniff::class, 'Id should only contain a-z, 0-9 and -.', 5, 1, 10),
         ], $file->getViolations());
     }
 }

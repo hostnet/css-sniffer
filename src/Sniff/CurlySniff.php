@@ -43,6 +43,7 @@ final class CurlySniff implements SniffInterface
             if ($contains_multiple_statements) {
                 if ($is_media_query) {
                     $file->addViolation(
+                        self::class,
                         'Media query should always be one multiple lines.',
                         $token->lines[0],
                         $token->offsets[0],
@@ -52,6 +53,7 @@ final class CurlySniff implements SniffInterface
                 }
 
                 $file->addViolation(
+                    self::class,
                     'Multiple statements found on one line.',
                     $token->lines[0],
                     $token->offsets[0],
@@ -71,6 +73,7 @@ final class CurlySniff implements SniffInterface
             $next = $file->get($stack_ptr + 1);
             if ($next->type !== Token::T_WHITESPACE || $next->chars !== ' ') {
                 $file->addViolation(
+                    self::class,
                     'Opening curly bracket should be follow by only one space.',
                     $token->lines[0],
                     $token->offsets[0],
@@ -82,6 +85,7 @@ final class CurlySniff implements SniffInterface
             $previous = $file->get($closing_curly_index - 1);
             if ($previous->type !== Token::T_WHITESPACE || $previous->chars !== ' ') {
                 $file->addViolation(
+                    self::class,
                     'Closing curly bracket should be proceeded by only one space.',
                     $last_token->lines[0],
                     $last_token->offsets[0],
@@ -95,6 +99,7 @@ final class CurlySniff implements SniffInterface
 
             // Multiple lines
             $file->addViolation(
+                self::class,
                 'One statements found and should be on one line.',
                 $token->lines[0],
                 $token->offsets[0],

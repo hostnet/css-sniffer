@@ -28,6 +28,7 @@ final class SemicolonSniff implements SniffInterface
 
         if ($next->type === Token::T_SEMICOLON) {
             $file->addViolation(
+                self::class,
                 'Duplicate semicolon.',
                 $next->lines[0],
                 $next->offsets[0],

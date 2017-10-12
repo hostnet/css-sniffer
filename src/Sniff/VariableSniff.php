@@ -25,6 +25,7 @@ final class VariableSniff implements SniffInterface
 
         if (1 !== preg_match('/^@[a-z0-9_-]*$/', $token->chars)) {
             $file->addViolation(
+                self::class,
                 'Variable should only contain a-z, 0-9, _ and -.',
                 $token->lines[0],
                 $token->offsets[0],

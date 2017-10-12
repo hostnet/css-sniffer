@@ -41,6 +41,7 @@ final class EmptyCommentSniff implements SniffInterface
             $lines = explode("\n", $token->chars);
 
             $file->addViolation(
+                self::class,
                 'Empty comment.',
                 $token->lines[0],
                 $token->offsets[0],

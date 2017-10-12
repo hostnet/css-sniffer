@@ -34,7 +34,7 @@ class VariableSniffTest extends TestCase
         $this->sniffer->process($file);
 
         self::assertEquals([
-            new Violation('Variable should only contain a-z, 0-9, _ and -.', 4, 1, 9),
+            new Violation(VariableSniff::class, 'Variable should only contain a-z, 0-9, _ and -.', 4, 1, 9),
         ], $file->getViolations());
     }
 

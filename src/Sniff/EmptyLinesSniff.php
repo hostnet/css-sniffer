@@ -35,6 +35,7 @@ final class EmptyLinesSniff implements SniffInterface
 
         if (substr_count($token->chars, $this->newline_char) > 2) {
             $file->addViolation(
+                self::class,
                 'More than two new lines found.',
                 $token->lines[0]
             );
