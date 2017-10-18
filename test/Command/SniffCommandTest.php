@@ -8,7 +8,6 @@ namespace Hostnet\Component\CssSniff\Command;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \Hostnet\Component\CssSniff\Command\SniffCommand

@@ -5,23 +5,18 @@ declare(strict_types=1);
  */
 namespace Hostnet\Component\CssSniff\Command;
 
-use Hostnet\Component\CssSniff\File;
+use Hostnet\Component\CssSniff\Configuration\NullConfiguration;
+use Hostnet\Component\CssSniff\Configuration\SingleFileConfiguration;
+use Hostnet\Component\CssSniff\Configuration\StdinConfiguration;
 use Hostnet\Component\CssSniff\Output\ConsoleFormatter;
 use Hostnet\Component\CssSniff\Output\FormatterInterface;
 use Hostnet\Component\CssSniff\Output\JsonFormatter;
-use Hostnet\Component\CssSniff\Sniff\ClassSniff;
-use Hostnet\Component\CssSniff\Sniff\ColorSniff;
-use Hostnet\Component\CssSniff\Sniff\EmptySniff;
-use Hostnet\Component\CssSniff\Sniff\IdSniff;
-use Hostnet\Component\CssSniff\Sniff\IndentSniff;
-use Hostnet\Component\CssSniff\Sniff\VariableSniff;
 use Hostnet\Component\CssSniff\Sniffer;
 use Hostnet\Component\CssSniff\Standard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Yannickl88\Component\CSS\Tokenizer;
 
 final class SniffCommand extends Command
 {
@@ -56,24 +51,22 @@ final class SniffCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->hasArgument('file') && !empty($input->getArgument('file'))) {
-            $contents = file_get_contents($input->getArgument('file'));
+            $config = new SingleFileConfiguration($input->getArgument('file'));
         } elseif (0 === ftell(STDIN)) {
-            $contents = '';
-            while (!feof(STDIN)) {
-                $contents .= fread(STDIN, 1024);
-            }
+            $config = new StdinConfiguration();
         } else {
-            $contents = '';
+            $config = new NullConfiguration();
         }
 
         $formatter = $this->getFormatter($input->getOption('format'));
 
         try {
-            $file = new File((new Tokenizer())->tokenize($contents));
+            $file = $config->getFile();
         } catch (\RuntimeException $e) {
             $output->writeln($formatter->formatError(null, $input->getOption('pretty')));
             return 0;
         }
+
         $standard = Standard::loadFromXmlFile($input->getOption('standard') ?? __DIR__ . '/../Standard/Hostnet.xml');
 
         $sniffer = new Sniffer();
