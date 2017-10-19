@@ -26,7 +26,7 @@ class SnifferTest extends TestCase
     public function testProcess()
     {
         $sniff = $this->prophesize(SniffInterface::class);
-        $file  = new File([
+        $file  = new File('phpunit', [
             new Token(Token::T_WORD, 'foobar', 1, 0),
             new Token(Token::T_WHITESPACE, ' ', 1, 6),
             new Token(Token::T_WORD, 'barbaz', 1, 7),

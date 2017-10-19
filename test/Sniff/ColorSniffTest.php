@@ -29,7 +29,10 @@ class ColorSniffTest extends TestCase
 
     public function testSniff()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_colors.less')));
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_colors.less'))
+        );
 
         $this->sniffer->process($file);
 
@@ -40,7 +43,10 @@ class ColorSniffTest extends TestCase
 
     public function testSniffVariants()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/color_variants.less')));
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/color_variants.less'))
+        );
 
         $this->sniffer->process($file);
 

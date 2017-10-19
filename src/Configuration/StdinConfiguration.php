@@ -18,6 +18,6 @@ final class StdinConfiguration implements SnifferConfigurationInterface
             $contents .= fread(STDIN, 1024);
         }
 
-        return new File((new Tokenizer())->tokenize($contents));
+        return new File('stdin', (new Tokenizer())->tokenize($contents));
     }
 }

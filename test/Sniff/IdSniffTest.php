@@ -29,7 +29,7 @@ class IdSniffTest extends TestCase
 
     public function testSniff()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_ids.less')));
+        $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_ids.less')));
 
         $this->sniffer->process($file);
 

@@ -20,6 +20,6 @@ final class SingleFileConfiguration implements SnifferConfigurationInterface
 
     public function getFile(): File
     {
-        return new File((new Tokenizer())->tokenize(file_get_contents($this->file_name)));
+        return new File($this->file_name, (new Tokenizer())->tokenize(file_get_contents($this->file_name)));
     }
 }

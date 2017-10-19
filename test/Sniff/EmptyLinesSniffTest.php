@@ -29,7 +29,10 @@ class EmptyLinesSniffTest extends TestCase
 
     public function testSniff()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/newlines.less')));
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/newlines.less'))
+        );
 
         $this->sniffer->process($file);
 

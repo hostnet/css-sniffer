@@ -29,7 +29,7 @@ class IndentSniffTest extends TestCase
 
     public function testSniff()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/indent.less')));
+        $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/indent.less')));
 
         $this->sniffer->process($file);
 

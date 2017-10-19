@@ -12,6 +12,6 @@ final class NullConfiguration implements SnifferConfigurationInterface
 {
     public function getFile(): File
     {
-        return new File([]);
+        return new File('', []);
     }
 }

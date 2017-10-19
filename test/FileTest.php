@@ -15,7 +15,7 @@ class FileTest extends TestCase
 {
     public function testGeneric()
     {
-        $file        = new File([
+        $file        = new File('phpunit', [
             $token_1 = new Token(Token::T_WORD, 'foobar', 1, 0),
             $token_2 = new Token(Token::T_WHITESPACE, ' ', 1, 6),
             $token_3 = new Token(Token::T_WORD, 'barbaz', 1, 7),

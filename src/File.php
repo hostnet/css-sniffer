@@ -12,15 +12,26 @@ use Yannickl88\Component\CSS\Token;
  */
 final class File
 {
+    private $name;
     private $tokens;
     private $violations = [];
 
     /**
+     * @param string  $name
      * @param Token[] $tokens
      */
-    public function __construct(array $tokens)
+    public function __construct(string $name, array $tokens)
     {
+        $this->name   = $name;
         $this->tokens = $tokens;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**

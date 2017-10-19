@@ -29,7 +29,10 @@ class ClassSniffTest extends TestCase
 
     public function testSniff()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_class.less')));
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_class.less'))
+        );
 
         $this->sniffer->process($file);
 
@@ -43,7 +46,10 @@ class ClassSniffTest extends TestCase
 
     public function testSniffWithVariables()
     {
-        $file = new File((new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/generated_class.less')));
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/generated_class.less'))
+        );
 
         $this->sniffer->process($file);
 
