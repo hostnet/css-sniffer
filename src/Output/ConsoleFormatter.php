@@ -27,6 +27,10 @@ final class ConsoleFormatter implements FormatterInterface
     {
         $out = '';
 
+        usort($files, function (File $a, File $b) {
+            return $a->getName() <=> $b->getName();
+        });
+
         foreach ($files as $file) {
             if ($file->isOk()) {
                 continue;

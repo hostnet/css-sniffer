@@ -27,18 +27,21 @@ final class CliConfiguration implements SnifferConfigurationInterface
             if (is_dir($file)) {
                 /* @var $child \SplFileInfo */
                 foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($file)) as $child) {
-                    if (in_array($child->getExtension(), ['css', 'less'], true)) {
-                        $files[] = new File(
-                            $child->__toString(),
-                            $tokenizer->tokenize(file_get_contents($child->__toString()))
-                        );
+                    $name = $child->__toString();
+
+                    if (isset($files[$name])
+                        || !in_array($child->getExtension(), ['css', 'less'], true)
+                    ) {
+                        continue;
                     }
+
+                    $files[$name] = new File($name, $tokenizer->tokenize(file_get_contents($name)));
                 }
-            } else {
-                $files[] = new File($file, $tokenizer->tokenize(file_get_contents($file)));
+            } elseif (!isset($files[$file])) {
+                $files[$file] = new File($file, $tokenizer->tokenize(file_get_contents($file)));
             }
         }
 
-        return $files;
+        return array_values($files);
     }
 }
