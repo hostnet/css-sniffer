@@ -12,10 +12,27 @@ use PHPUnit\Framework\TestCase;
  */
 class StandardTest extends TestCase
 {
-    public function testLoadFromXmlFile()
+    public function testLoadFromXmlFileSimple()
     {
-        $standard = Standard::loadFromXmlFile(__DIR__ . '/../src/Standard/Hostnet.xml');
+        $standard = Standard::loadFromXmlFile(__DIR__ . '/fixtures/simple.xml.dist');
 
-        self::assertEquals('Hostnet', $standard->getName());
+        self::assertEquals('simple', $standard->getName());
+        self::assertCount(1, $standard->getSniffs());
+    }
+
+    public function testLoadFromXmlFileExtendRelative()
+    {
+        $standard = Standard::loadFromXmlFile(__DIR__ . '/fixtures/extend-relative.xml.dist');
+
+        self::assertEquals('extend-relative', $standard->getName());
+        self::assertCount(12, $standard->getSniffs());
+    }
+
+    public function testLoadFromXmlFileExtendDefault()
+    {
+        $standard = Standard::loadFromXmlFile(__DIR__ . '/fixtures/extend-default.xml.dist');
+
+        self::assertEquals('extend-default', $standard->getName());
+        self::assertCount(12, $standard->getSniffs());
     }
 }

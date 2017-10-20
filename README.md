@@ -57,16 +57,19 @@ Help:
 ### Defining your own standard
 If you would like to create your own standard, you can do this by creating your own `xml` file and passing it with `-s` or `--standard`. An exmple of a standard file is:
 ```xml
+<?xml version="1.0"?>
 <csssniffer>
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ArgsSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff">
-        <arg>[a-z0-9-]+</arg>
-    </sniff>
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ColorSniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\CurlySniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyCommentSniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyLinesSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptySniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IdSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\IndentSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\QuoteTypeSniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\SemicolonSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\VariableSniff" />
 </csssniffer>
 ```

@@ -1,8 +1,7 @@
+<?xml version="1.0"?>
 <csssniffer>
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ArgsSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff">
-        <arg>[a-z0-9-]+</arg>
-    </sniff>
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ColorSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\CurlySniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyCommentSniff" />

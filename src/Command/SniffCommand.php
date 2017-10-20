@@ -69,7 +69,7 @@ final class SniffCommand extends Command
             return 0;
         }
 
-        $standard = Standard::loadFromXmlFile($input->getOption('standard') ?? __DIR__ . '/../Standard/Hostnet.xml');
+        $standard = Standard::loadFromXmlFile($this->guessStandard($input->getOption('standard')));
 
         $sniffer = new Sniffer();
         $sniffer->loadStandard($standard);
@@ -90,5 +90,22 @@ final class SniffCommand extends Command
         }
 
         return new ConsoleFormatter($pretty_format);
+    }
+
+    private function guessStandard(?string $standard): string
+    {
+        if (null !== $standard) {
+            return $standard;
+        }
+
+        if (file_exists('csssniff.xml')) {
+            return realpath('csssniff.xml');
+        }
+
+        if (file_exists('csssniff.xml.dist')) {
+            return realpath('csssniff.xml.dist');
+        }
+
+        return 'Hostnet';
     }
 }
