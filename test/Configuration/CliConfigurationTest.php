@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Hostnet\Component\CssSniff\Configuration\CliConfiguration
  */
-class SingleConfigurationTest extends TestCase
+class CliConfigurationTest extends TestCase
 {
     /**
      * @var CliConfiguration
