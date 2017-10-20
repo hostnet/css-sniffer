@@ -1,0 +1,10 @@
+
+FILE: phpunit
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 1 | this is a very long violoation message which require to be split into
+   | multple lines so that it can be read more properly without overflowing to
+   | outside of the table. Because if it would do that it becomes very difficult
+   | to read on smaller screens.
+--------------------------------------------------------------------------------

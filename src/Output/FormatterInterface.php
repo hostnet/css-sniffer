@@ -5,21 +5,19 @@ declare(strict_types=1);
  */
 namespace Hostnet\Component\CssSniff\Output;
 
-use Hostnet\Component\CssSniff\Violation;
+use Hostnet\Component\CssSniff\File;
 
 interface FormatterInterface
 {
     /**
-     * @param Violation[] $violations
-     * @param bool        $pretty
+     * @param File[] $files
      * @return string
      */
-    public function format(array $violations, bool $pretty = false): string;
+    public function format(array $files): string;
 
     /**
-     * @param mixed $error
-     * @param bool  $pretty
+     * @param \Exception $error
      * @return string
      */
-    public function formatError($error, bool $pretty = false): string;
+    public function formatError(\Exception $error): string;
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="1.0.0">
+  <file name="phpunit">
+    <error line="1" column="0" severity="error" message="foobar" source="phpunit"/>
+  </file>
+</checkstyle>

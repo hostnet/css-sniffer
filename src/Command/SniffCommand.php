@@ -8,6 +8,7 @@ namespace Hostnet\Component\CssSniff\Command;
 use Hostnet\Component\CssSniff\Configuration\NullConfiguration;
 use Hostnet\Component\CssSniff\Configuration\SingleFileConfiguration;
 use Hostnet\Component\CssSniff\Configuration\StdinConfiguration;
+use Hostnet\Component\CssSniff\Output\CheckstyleFormatter;
 use Hostnet\Component\CssSniff\Output\ConsoleFormatter;
 use Hostnet\Component\CssSniff\Output\FormatterInterface;
 use Hostnet\Component\CssSniff\Output\JsonFormatter;
@@ -58,12 +59,12 @@ final class SniffCommand extends Command
             $config = new NullConfiguration();
         }
 
-        $formatter = $this->getFormatter($input->getOption('format'));
+        $formatter = $this->getFormatter($input->getOption('format'), $input->getOption('pretty'));
 
         try {
             $file = $config->getFile();
         } catch (\RuntimeException $e) {
-            $output->writeln($formatter->formatError(null, $input->getOption('pretty')));
+            $output->writeln($formatter->formatError($e));
             return 0;
         }
 
@@ -73,21 +74,20 @@ final class SniffCommand extends Command
         $sniffer->loadStandard($standard);
         $sniffer->process($file);
 
-        $output->writeln($formatter->format(
-            $file->getViolations(),
-            $input->getOption('pretty')
-        ));
+        $output->writeln($formatter->format([$file]));
 
         return $input->getOption('no-exit-code') || $file->isOk() ? 0 : 1;
     }
 
-    private function getFormatter(string $type): FormatterInterface
+    private function getFormatter(string $type, bool $pretty_format): FormatterInterface
     {
         switch ($type) {
             case 'json':
-                return new JsonFormatter();
+                return new JsonFormatter($pretty_format);
+            case 'checkstyle':
+                return new CheckstyleFormatter($pretty_format);
         }
 
-        return new ConsoleFormatter();
+        return new ConsoleFormatter($pretty_format);
     }
 }

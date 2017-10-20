@@ -1,0 +1,1 @@
+{"totals":{"errors":0},"files":{{{FILE}}:{"errors":1,"messages":[{"message":"Colors should always be 6 characters hex values.","source":"Hostnet\\Component\\CssSniff\\Sniff\\ColorSniff","line":2,"column":12}]}}}

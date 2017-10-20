@@ -1,0 +1,1 @@
+{"totals":{"errors":0},"files":{"phpunit":{"errors":1,"messages":[{"message":"foobar","source":"phpunit","line":1,"column":0}]}}}

@@ -9,18 +9,18 @@ use Hostnet\Component\CssSniff\File;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Hostnet\Component\CssSniff\Output\JsonFormatter
+ * @covers \Hostnet\Component\CssSniff\Output\CheckstyleFormatter
  */
-class JsonFormatterTest extends TestCase
+class CheckstyleFormatterTest extends TestCase
 {
     /**
-     * @var JsonFormatter
+     * @var CheckstyleFormatter
      */
-    private $json_formatter;
+    private $checkstyle_formatter;
 
     protected function setUp()
     {
-        $this->json_formatter = new JsonFormatter(false);
+        $this->checkstyle_formatter = new CheckstyleFormatter(false);
     }
 
     public function testFormat()
@@ -29,16 +29,16 @@ class JsonFormatterTest extends TestCase
         $file->addViolation('phpunit', 'foobar', 1);
 
         self::assertStringEqualsFile(
-            __DIR__ . '/output.json.txt',
-            $this->json_formatter->format([$file])
+            __DIR__ . '/output.checkstyle.txt',
+            $this->checkstyle_formatter->format([$file])
         );
     }
 
     public function testFormatError()
     {
         self::assertSame(
-            '"Some Error"',
-            $this->json_formatter->formatError(new \RuntimeException('Some Error'))
+            'Some Error',
+            $this->checkstyle_formatter->formatError(new \RuntimeException('Some Error'))
         );
     }
 }

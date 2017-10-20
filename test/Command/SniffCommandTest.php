@@ -32,8 +32,8 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            'Colors should always be 6 characters hex values. At line 2:12.' . PHP_EOL,
-            $output->fetch()
+            str_replace('{{FILE}}', __DIR__ . '/test.less', file_get_contents(__DIR__ . '/output.console.txt')),
+            trim($output->fetch()) . "\n"
         );
     }
 
@@ -45,8 +45,12 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            '[{"msg":"Colors should always be 6 characters hex values.","line":2,"start":12,"end":16}]' . PHP_EOL,
-            $output->fetch()
+            str_replace(
+                '{{FILE}}',
+                json_encode(__DIR__ . '/test.less'),
+                file_get_contents(__DIR__ . '/output.json.txt')
+            ),
+            trim($output->fetch()) . "\n"
         );
     }
 
@@ -58,7 +62,7 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            '[]' . PHP_EOL,
+            '{"totals":{"errors":0},"files":[]}' . PHP_EOL,
             $output->fetch()
         );
     }
@@ -71,7 +75,7 @@ class SniffCommandTest extends TestCase
         $this->sniff_command->run($input, $output);
 
         self::assertEquals(
-            'null' . PHP_EOL,
+            '"unclosed"' . PHP_EOL,
             $output->fetch()
         );
     }
