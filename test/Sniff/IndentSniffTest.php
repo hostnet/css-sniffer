@@ -31,7 +31,7 @@ class IndentSniffTest extends TestCase
     {
         $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/indent.less')));
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(IndentSniff::class, 'Line not indented correctly, expected 4, got 2.', 5, 0, -1),

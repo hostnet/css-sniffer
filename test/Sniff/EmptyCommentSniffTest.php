@@ -34,7 +34,7 @@ class EmptyCommentSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/comments.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(EmptyCommentSniff::class, 'Empty comment.', 3, 1, 3),

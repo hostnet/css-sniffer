@@ -31,7 +31,7 @@ class IdSniffTest extends TestCase
     {
         $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_ids.less')));
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(IdSniff::class, 'Id should only contain a-z, 0-9 and -.', 1, 1, 10),

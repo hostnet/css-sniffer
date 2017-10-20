@@ -31,7 +31,7 @@ class CurlySniffTest extends TestCase
     {
         $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/curly.less')));
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(CurlySniff::class, 'Opening curly bracket should be follow by only one space.', 6, 7, 8),

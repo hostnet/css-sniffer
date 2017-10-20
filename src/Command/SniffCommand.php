@@ -5,8 +5,8 @@ declare(strict_types=1);
  */
 namespace Hostnet\Component\CssSniff\Command;
 
+use Hostnet\Component\CssSniff\Configuration\CliConfiguration;
 use Hostnet\Component\CssSniff\Configuration\NullConfiguration;
-use Hostnet\Component\CssSniff\Configuration\SingleFileConfiguration;
 use Hostnet\Component\CssSniff\Configuration\StdinConfiguration;
 use Hostnet\Component\CssSniff\Output\CheckstyleFormatter;
 use Hostnet\Component\CssSniff\Output\ConsoleFormatter;
@@ -15,6 +15,7 @@ use Hostnet\Component\CssSniff\Output\JsonFormatter;
 use Hostnet\Component\CssSniff\Sniffer;
 use Hostnet\Component\CssSniff\Standard;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,14 +46,14 @@ final class SniffCommand extends Command
                 InputOption::VALUE_NONE,
                 'Always return 0 as exit code, regardless of the result'
             )
-            ->addArgument('file', null, 'Input file')
+            ->addArgument('files', InputArgument::IS_ARRAY, 'Input file')
             ->setDescription('Sniffs the given input file and returns the result.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->hasArgument('file') && !empty($input->getArgument('file'))) {
-            $config = new SingleFileConfiguration($input->getArgument('file'));
+        if ($input->hasArgument('files') && !empty($input->getArgument('files'))) {
+            $config = new CliConfiguration($input->getArgument('files'));
         } elseif (0 === ftell(STDIN)) {
             $config = new StdinConfiguration();
         } else {
@@ -62,7 +63,7 @@ final class SniffCommand extends Command
         $formatter = $this->getFormatter($input->getOption('format'), $input->getOption('pretty'));
 
         try {
-            $file = $config->getFile();
+            $files = $config->getFiles();
         } catch (\RuntimeException $e) {
             $output->writeln($formatter->formatError($e));
             return 0;
@@ -72,11 +73,11 @@ final class SniffCommand extends Command
 
         $sniffer = new Sniffer();
         $sniffer->loadStandard($standard);
-        $sniffer->process($file);
+        $ok = $sniffer->process($files);
 
-        $output->writeln($formatter->format([$file]));
+        $output->writeln($formatter->format($files));
 
-        return $input->getOption('no-exit-code') || $file->isOk() ? 0 : 1;
+        return $input->getOption('no-exit-code') || $ok ? 0 : 1;
     }
 
     private function getFormatter(string $type, bool $pretty_format): FormatterInterface

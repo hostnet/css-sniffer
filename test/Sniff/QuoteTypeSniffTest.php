@@ -31,7 +31,7 @@ class QuoteTypeSniffTest extends TestCase
     {
         $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/quotes.less')));
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(QuoteTypeSniff::class, 'Text should use " as quotes.', 5, 27, 37),

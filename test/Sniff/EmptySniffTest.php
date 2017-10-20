@@ -31,7 +31,7 @@ class EmptySniffTest extends TestCase
     {
         $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/empty.less')));
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(EmptySniff::class, 'CSS block should not be empty.', 1, 9, 10),

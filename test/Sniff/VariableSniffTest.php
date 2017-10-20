@@ -34,7 +34,7 @@ class VariableSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_variable.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(VariableSniff::class, 'Variable should only contain a-z, 0-9, _ and -.', 4, 1, 9),
@@ -48,7 +48,7 @@ class VariableSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/generated_class.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEmpty($file->getViolations());
     }

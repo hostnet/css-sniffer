@@ -34,7 +34,7 @@ class SemicolonSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/semicolon.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(SemicolonSniff::class, 'Duplicate semicolon.', 2, 19, 20),

@@ -39,6 +39,6 @@ class SnifferTest extends TestCase
         $sniff->process($file, 3)->shouldBeCalled();
 
         $this->sniffer->addSniff($sniff->reveal());
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
     }
 }

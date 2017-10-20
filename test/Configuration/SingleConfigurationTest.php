@@ -9,22 +9,25 @@ use Hostnet\Component\CssSniff\File;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Hostnet\Component\CssSniff\Configuration\SingleFileConfiguration
+ * @covers \Hostnet\Component\CssSniff\Configuration\CliConfiguration
  */
 class SingleConfigurationTest extends TestCase
 {
     /**
-     * @var SingleFileConfiguration
+     * @var CliConfiguration
      */
     private $single_file_configuration;
 
     protected function setUp()
     {
-        $this->single_file_configuration = new SingleFileConfiguration(__DIR__ . '/test.less');
+        $this->single_file_configuration = new CliConfiguration([__DIR__ . '/test.less']);
     }
 
     public function testGetFile()
     {
-        self::assertInstanceOf(File::class, $this->single_file_configuration->getFile());
+        $files = $this->single_file_configuration->getFiles();
+
+        self::assertCount(1, $files);
+        self::assertInstanceOf(File::class, $files[0]);
     }
 }

@@ -6,12 +6,10 @@ declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Configuration;
 
-use Hostnet\Component\CssSniff\File;
-
 final class NullConfiguration implements SnifferConfigurationInterface
 {
-    public function getFile(): File
+    public function getFiles(): array
     {
-        return new File('', []);
+        return [];
     }
 }

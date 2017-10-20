@@ -25,6 +25,6 @@ class NullConfigurationTest extends TestCase
 
     public function testGetFile()
     {
-        self::assertInstanceOf(File::class, $this->null_configuration->getFile());
+        self::assertEmpty($this->null_configuration->getFiles());
     }
 }

@@ -26,7 +26,7 @@ class SniffCommandTest extends TestCase
 
     public function testExecuteConsoleOutput()
     {
-        $input  = new ArrayInput(['file' => __DIR__ . '/test.less']);
+        $input  = new ArrayInput(['files' => [__DIR__ . '/test.less']]);
         $output = new BufferedOutput();
 
         $this->sniff_command->run($input, $output);
@@ -39,7 +39,7 @@ class SniffCommandTest extends TestCase
 
     public function testExecuteJsonOutput()
     {
-        $input  = new ArrayInput(['--format' => 'json', 'file' => __DIR__ . '/test.less']);
+        $input  = new ArrayInput(['--format' => 'json', 'files' => [__DIR__ . '/test.less']]);
         $output = new BufferedOutput();
 
         $this->sniff_command->run($input, $output);
@@ -56,7 +56,7 @@ class SniffCommandTest extends TestCase
 
     public function testExecuteEmptyInput()
     {
-        $input  = new ArrayInput(['--format' => 'json', 'file' => __DIR__ . '/empty.less']);
+        $input  = new ArrayInput(['--format' => 'json', 'files' => [__DIR__ . '/empty.less']]);
         $output = new BufferedOutput();
 
         $this->sniff_command->run($input, $output);
@@ -69,7 +69,7 @@ class SniffCommandTest extends TestCase
 
     public function testExecuteErrorInput()
     {
-        $input  = new ArrayInput(['--format' => 'json', 'file' => __DIR__ . '/error.less']);
+        $input  = new ArrayInput(['--format' => 'json', 'files' => [__DIR__ . '/error.less']]);
         $output = new BufferedOutput();
 
         $this->sniff_command->run($input, $output);

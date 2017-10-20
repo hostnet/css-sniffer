@@ -31,7 +31,7 @@ class ArgsSniffTest extends TestCase
     {
         $file = new File('phpunit', (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/args.less')));
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(ArgsSniff::class, 'Comma should be followed by 1 and no more spaces.', 2, 10, 11),

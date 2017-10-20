@@ -11,13 +11,13 @@ use Yannickl88\Component\CSS\Tokenizer;
 
 final class StdinConfiguration implements SnifferConfigurationInterface
 {
-    public function getFile(): File
+    public function getFiles(): array
     {
         $contents = '';
         while (!feof(STDIN)) {
             $contents .= fread(STDIN, 1024);
         }
 
-        return new File('stdin', (new Tokenizer())->tokenize($contents));
+        return [new File('stdin', (new Tokenizer())->tokenize($contents))];
     }
 }

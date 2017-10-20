@@ -34,7 +34,7 @@ class EmptyLinesSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/newlines.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(EmptyLinesSniff::class, 'More than two new lines found.', 3),

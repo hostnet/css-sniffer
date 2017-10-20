@@ -42,18 +42,27 @@ final class Sniffer
      * Process a file with all the registered sniffs. This will add violations
      * if there are any.
      *
-     * @param File $file
+     * @param File[] $files
+     * @return bool
      */
-    public function process(File $file): void
+    public function process(array $files): bool
     {
-        $tokens = $file->getTokens();
+        $ok = true;
 
-        for ($i = 0, $n = count($tokens); $i < $n; $i++) {
-            if (isset($this->listeners[$tokens[$i]->type])) {
-                foreach ($this->listeners[$tokens[$i]->type] as $sniff) {
-                    $sniff->process($file, $i);
+        foreach ($files as $file) {
+            $tokens = $file->getTokens();
+
+            for ($i = 0, $n = count($tokens); $i < $n; $i++) {
+                if (isset($this->listeners[$tokens[$i]->type])) {
+                    foreach ($this->listeners[$tokens[$i]->type] as $sniff) {
+                        $sniff->process($file, $i);
+                    }
                 }
             }
+
+            $ok = $ok && $file->isOk();
         }
+
+        return $ok;
     }
 }

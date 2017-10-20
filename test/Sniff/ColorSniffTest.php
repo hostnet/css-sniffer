@@ -34,7 +34,7 @@ class ColorSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/bad_colors.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(ColorSniff::class, 'Colors should always be 6 characters hex values.', 4, 13, 17),
@@ -48,7 +48,7 @@ class ColorSniffTest extends TestCase
             (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/color_variants.less'))
         );
 
-        $this->sniffer->process($file);
+        $this->sniffer->process([$file]);
 
         self::assertEquals([
             new Violation(ColorSniff::class, 'Colors should always be 6 characters hex values.', 2, 12, 16),

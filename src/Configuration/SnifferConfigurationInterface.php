@@ -14,5 +14,10 @@ use Hostnet\Component\CssSniff\File;
  */
 interface SnifferConfigurationInterface
 {
-    public function getFile(): File;
+    /**
+     * Return all files to process.
+     *
+     * @return File[]|array
+     */
+    public function getFiles(): array;
 }
