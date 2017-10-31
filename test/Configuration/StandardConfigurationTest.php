@@ -5,22 +5,22 @@
 declare(strict_types=1);
 namespace Hostnet\Component\CssSniff\Configuration;
 
-use Hostnet\Component\CssSniff\File;
+use Hostnet\Component\CssSniff\Standard;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Hostnet\Component\CssSniff\Configuration\NullConfiguration
+ * @covers \Hostnet\Component\CssSniff\Configuration\StandardConfiguration
  */
-class NullConfigurationTest extends TestCase
+class StandardConfigurationTest extends TestCase
 {
     /**
-     * @var NullConfiguration
+     * @var StandardConfiguration
      */
     private $null_configuration;
 
     protected function setUp()
     {
-        $this->null_configuration = new NullConfiguration();
+        $this->null_configuration = new StandardConfiguration(Standard::loadFromXmlFile('Hostnet'));
     }
 
     public function testGetFile()

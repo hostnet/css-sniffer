@@ -24,6 +24,19 @@ class SniffCommandTest extends TestCase
         $this->sniff_command = new SniffCommand();
     }
 
+    public function testExecuteStandardConfig()
+    {
+        $input  = new ArrayInput([]);
+        $output = new BufferedOutput();
+
+        $this->sniff_command->run($input, $output);
+
+        self::assertEquals(
+            "\n",
+            trim($output->fetch()) . "\n"
+        );
+    }
+
     public function testExecuteConsoleOutput()
     {
         $input  = new ArrayInput(['files' => [__DIR__ . '/test.less']]);
@@ -50,6 +63,19 @@ class SniffCommandTest extends TestCase
                 json_encode(__DIR__ . '/test.less'),
                 file_get_contents(__DIR__ . '/output.json.txt')
             ),
+            trim($output->fetch()) . "\n"
+        );
+    }
+
+    public function testExecuteCheckstyleOutput()
+    {
+        $input  = new ArrayInput(['--format' => 'checkstyle', 'files' => [__DIR__ . '/test.less']]);
+        $output = new BufferedOutput();
+
+        $this->sniff_command->run($input, $output);
+
+        self::assertEquals(
+            str_replace('{{FILE}}', __DIR__ . '/test.less', file_get_contents(__DIR__ . '/output.checkstyle.txt')),
             trim($output->fetch()) . "\n"
         );
     }

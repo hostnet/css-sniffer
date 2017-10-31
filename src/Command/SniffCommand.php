@@ -6,7 +6,7 @@ declare(strict_types=1);
 namespace Hostnet\Component\CssSniff\Command;
 
 use Hostnet\Component\CssSniff\Configuration\CliConfiguration;
-use Hostnet\Component\CssSniff\Configuration\NullConfiguration;
+use Hostnet\Component\CssSniff\Configuration\StandardConfiguration;
 use Hostnet\Component\CssSniff\Configuration\StdinConfiguration;
 use Hostnet\Component\CssSniff\Output\CheckstyleFormatter;
 use Hostnet\Component\CssSniff\Output\ConsoleFormatter;
@@ -39,6 +39,12 @@ final class SniffCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'Code Standard to use, by default the Hostnet standard is used. This is the path to the xml file.'
             )
+            ->addOption(
+                'stdin',
+                null,
+                InputOption::VALUE_NONE,
+                'If given, this option will tell the sniffer to check the STDIN for input.'
+            )
             ->addOption('pretty', 'p', InputOption::VALUE_NONE, 'Pretty format output')
             ->addOption(
                 'no-exit-code',
@@ -52,12 +58,17 @@ final class SniffCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->hasArgument('files') && !empty($input->getArgument('files'))) {
+        $standard = Standard::loadFromXmlFile($this->guessStandard($input->getOption('standard')));
+
+        if ($input->getOption('stdin')) {
+            // use the first file passed as the file name.
+            $file = !empty($input->getArgument('files')) ? current($input->getArgument('files')) : 'stdin';
+
+            $config = new StdinConfiguration($file);
+        } elseif ($input->hasArgument('files') && !empty($input->getArgument('files'))) {
             $config = new CliConfiguration($input->getArgument('files'));
-        } elseif (0 === ftell(STDIN)) {
-            $config = new StdinConfiguration();
         } else {
-            $config = new NullConfiguration();
+            $config = new StandardConfiguration($standard);
         }
 
         $formatter = $this->getFormatter($input->getOption('format'), $input->getOption('pretty'));
@@ -68,8 +79,6 @@ final class SniffCommand extends Command
             $output->writeln($formatter->formatError($e));
             return 0;
         }
-
-        $standard = Standard::loadFromXmlFile($this->guessStandard($input->getOption('standard')));
 
         $sniffer = new Sniffer();
         $sniffer->loadStandard($standard);

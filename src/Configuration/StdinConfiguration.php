@@ -11,6 +11,13 @@ use Yannickl88\Component\CSS\Tokenizer;
 
 final class StdinConfiguration implements SnifferConfigurationInterface
 {
+    private $file;
+
+    public function __construct(string $file = 'stdin')
+    {
+        $this->file = $file;
+    }
+
     public function getFiles(): array
     {
         $contents = '';
@@ -18,6 +25,6 @@ final class StdinConfiguration implements SnifferConfigurationInterface
             $contents .= fread(STDIN, 1024);
         }
 
-        return [new File('stdin', (new Tokenizer())->tokenize($contents))];
+        return [new File($this->file, (new Tokenizer())->tokenize($contents))];
     }
 }
