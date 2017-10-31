@@ -24,7 +24,7 @@ class IndentSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new IndentSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(IndentSniff::class));
     }
 
     public function testSniff()

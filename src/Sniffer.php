@@ -20,7 +20,7 @@ final class Sniffer
      *
      * @param SniffInterface $s
      */
-    public function addSniff(SniffInterface $s): void
+    private function addSniff(SniffInterface $s): void
     {
         foreach ($s->register() as $type) {
             if (!isset($this->listeners[$type])) {

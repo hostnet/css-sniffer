@@ -24,7 +24,7 @@ class IdSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new IdSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(IdSniff::class));
     }
 
     public function testSniff()

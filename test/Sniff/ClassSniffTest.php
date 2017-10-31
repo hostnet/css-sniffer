@@ -24,7 +24,7 @@ class ClassSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new ClassSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(ClassSniff::class));
     }
 
     public function testSniff()

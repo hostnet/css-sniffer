@@ -24,7 +24,7 @@ class QuoteTypeSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new QuoteTypeSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(QuoteTypeSniff::class));
     }
 
     public function testSniff()

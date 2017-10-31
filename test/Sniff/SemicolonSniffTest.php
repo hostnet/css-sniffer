@@ -24,7 +24,7 @@ class SemicolonSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new SemicolonSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(SemicolonSniff::class));
     }
 
     public function testSniff()

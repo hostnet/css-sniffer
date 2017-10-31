@@ -24,7 +24,7 @@ class CurlySniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new CurlySniff());
+        $this->sniffer->loadStandard(SingleStandard::load(CurlySniff::class));
     }
 
     public function testSniff()

@@ -24,7 +24,7 @@ class EmptyCommentSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new EmptyCommentSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(EmptyCommentSniff::class));
     }
 
     public function testSniff()

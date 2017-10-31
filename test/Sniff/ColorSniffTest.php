@@ -24,7 +24,7 @@ class ColorSniffTest extends TestCase
     protected function setUp()
     {
         $this->sniffer = new Sniffer();
-        $this->sniffer->addSniff(new ColorSniff());
+        $this->sniffer->loadStandard(SingleStandard::load(ColorSniff::class));
     }
 
     public function testSniff()
