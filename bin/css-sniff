@@ -24,7 +24,7 @@ if ((!$loader = includeIfExists(__DIR__ . '/vendor/autoload.php'))
 
 $sniff_command = new \Hostnet\Component\CssSniff\Command\SniffCommand();
 
-$application = new \Symfony\Component\Console\Application();
+$application = new \Symfony\Component\Console\Application('Hostnet CSS Sniffer', 'v2.0 (stable)');
 $application->add($sniff_command);
 $application->setDefaultCommand($sniff_command->getName());
 $application->run();
