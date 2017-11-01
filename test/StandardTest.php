@@ -5,6 +5,8 @@
 declare(strict_types=1);
 namespace Hostnet\Component\CssSniff;
 
+use Hostnet\Component\CssSniff\Sniff\ArgsSniff;
+use Hostnet\Component\CssSniff\Sniff\ClassSniff;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,8 +37,12 @@ class StandardTest extends TestCase
     {
         $standard = Standard::loadFromXmlFile(__DIR__ . '/fixtures/extend-default.xml.dist');
 
+        $sniffs = $standard->getSniffs();
+
         self::assertEquals('extend-default', $standard->getName());
-        self::assertCount(12, $standard->getSniffs());
+        self::assertCount(12, $sniffs);
+        self::assertEquals(new SniffConfiguration(new ArgsSniff(), ['`color\.less`i']), $sniffs[0]);
+        self::assertEquals(new SniffConfiguration(new ClassSniff('[a-z]+'), []), $sniffs[1]);
     }
 
     /**

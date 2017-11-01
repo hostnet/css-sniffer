@@ -11,7 +11,11 @@ class Standard
     private $files              = [];
     private $directories        = [];
     private $exclusion_patterns = [];
-    private $sniffs             = [];
+
+    /**
+     * @var SniffConfiguration[]
+     */
+    private $sniffs = [];
 
     /**
      * Parse a standard xml file into a Standard class.
@@ -79,15 +83,30 @@ class Standard
 
             // <sniff class="..." /> element?
             if (isset($sniff_data->attributes()->class)) {
-                $class = $sniff_data->attributes()->class->__toString();
-                $args  = [];
+                $class              = $sniff_data->attributes()->class->__toString();
+                $args               = [];
+                $exclusion_patterns = [];
 
                 // <arg> elements
                 foreach ($sniff_data->{'arg'} as $pattern) {
                     $args[] = $pattern->__toString();
                 }
 
-                $standard->addSniff((new \ReflectionClass($class))->newInstanceArgs($args));
+                // <exclude-pattern> elements
+                foreach ($sniff_data->{'exclude-pattern'} as $pattern) {
+                    $exclusion_patterns[] = self::makeRegex($pattern->__toString());
+                }
+
+                $sniff = new SniffConfiguration(
+                    (new \ReflectionClass($class))->newInstanceArgs($args),
+                    $exclusion_patterns
+                );
+
+                if (isset($standard->sniffs[$class])) {
+                    $standard->sniffs[$class]->extend($sniff);
+                } else {
+                    $standard->sniffs[$class] = $sniff;
+                }
 
                 continue;
             }
@@ -107,11 +126,6 @@ class Standard
     private function __construct(string $name)
     {
         $this->name = $name;
-    }
-
-    private function addSniff(SniffInterface $sniff): void
-    {
-        $this->sniffs[get_class($sniff)] = $sniff;
     }
 
     /**
@@ -157,7 +171,7 @@ class Standard
     /**
      * Return all sniffs which are contained by this Standard.
      *
-     * @return SniffInterface[]
+     * @return SniffConfiguration[]
      */
     public function getSniffs(): array
     {
@@ -173,10 +187,10 @@ class Standard
     {
         foreach ($standard->sniffs as $class => $sniff) {
             if (isset($this->sniffs[$class])) {
-                continue;
+                $this->sniffs[$class]->extend($sniff);
+            } else {
+                $this->sniffs[$class] = $sniff;
             }
-
-            $this->sniffs[$class] = $sniff;
         }
     }
 }

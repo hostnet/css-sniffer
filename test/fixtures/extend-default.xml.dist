@@ -1,4 +1,12 @@
 <?xml version="1.0"?>
 <csssniffer>
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\ArgsSniff">
+        <exclude-pattern>color.less</exclude-pattern>
+    </sniff>
+
     <sniff rel="Hostnet"/>
+
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff">
+        <arg>[a-z]+</arg>
+    </sniff>
 </csssniffer>

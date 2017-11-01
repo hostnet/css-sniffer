@@ -11,18 +11,13 @@ namespace Hostnet\Component\CssSniff;
 final class Sniffer
 {
     /**
-     * @var SniffInterface[][]
+     * @var SniffConfiguration[][]
      */
     private $listeners = [];
 
-    /**
-     * Add a sniff.
-     *
-     * @param SniffInterface $s
-     */
-    private function addSniff(SniffInterface $s): void
+    private function addSniff(SniffConfiguration $s): void
     {
-        foreach ($s->register() as $type) {
+        foreach ($s->getSniff()->register() as $type) {
             if (!isset($this->listeners[$type])) {
                 $this->listeners[$type] = [];
             }
@@ -31,6 +26,11 @@ final class Sniffer
         }
     }
 
+    /**
+     * Load a standard into the sniffer. This registers sniff which can be used to sniff.
+     *
+     * @param Standard $standard
+     */
     public function loadStandard(Standard $standard): void
     {
         foreach ($standard->getSniffs() as $sniff) {
@@ -50,12 +50,21 @@ final class Sniffer
         $ok = true;
 
         foreach ($files as $file) {
-            $tokens = $file->getTokens();
+            $tokens            = $file->getTokens();
+            $sniff_match_cache = new \SplObjectStorage();
 
             for ($i = 0, $n = count($tokens); $i < $n; $i++) {
                 if (isset($this->listeners[$tokens[$i]->type])) {
                     foreach ($this->listeners[$tokens[$i]->type] as $sniff) {
-                        $sniff->process($file, $i);
+                        if (!isset($sniff_match_cache[$sniff])) {
+                            $sniff_match_cache[$sniff] = $sniff->shouldSniff($file);
+                        }
+
+                        if (!$sniff_match_cache[$sniff]) {
+                            continue;
+                        }
+
+                        $sniff->getSniff()->process($file, $i);
                     }
                 }
             }

@@ -40,6 +40,6 @@ class SnifferTest extends TestCase
             [$file, 0],
             [$file, 2],
             [$file, 3],
-        ], $standard->getSniffs()[0]->process_calls);
+        ], $standard->getSniffs()[0]->getSniff()->process_calls);
     }
 }

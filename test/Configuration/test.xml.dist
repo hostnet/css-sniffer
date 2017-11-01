@@ -2,6 +2,10 @@
 <csssniffer>
     <sniff rel="Hostnet" />
 
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyLinesSniff">
+        <exclude-pattern>color.less</exclude-pattern>
+    </sniff>
+
     <file>./test.less</file>
     <file>../Sniff/fixtures/args.less</file>
     <directory>../Sniff/fixtures</directory>

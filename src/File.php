@@ -9,6 +9,8 @@ use Yannickl88\Component\CSS\Token;
 
 /**
  * Class which can be used for sniffing.
+ *
+ * @internal
  */
 final class File
 {
