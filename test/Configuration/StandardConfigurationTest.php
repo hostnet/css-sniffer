@@ -5,6 +5,7 @@
 declare(strict_types=1);
 namespace Hostnet\Component\CssSniff\Configuration;
 
+use Hostnet\Component\CssSniff\File;
 use Hostnet\Component\CssSniff\Standard;
 use PHPUnit\Framework\TestCase;
 
@@ -20,11 +21,50 @@ class StandardConfigurationTest extends TestCase
 
     protected function setUp()
     {
-        $this->null_configuration = new StandardConfiguration(Standard::loadFromXmlFile('Hostnet'));
+        $this->null_configuration = new StandardConfiguration(Standard::loadFromXmlFile(__DIR__ . '/test.xml.dist'));
     }
 
     public function testGetFile()
     {
-        self::assertEmpty($this->null_configuration->getFiles());
+        $files = array_map(function (File $f) {
+            return $f->getName();
+        }, $this->null_configuration->getFiles());
+
+        sort($files);
+
+        self::assertEquals([
+            dirname(__DIR__) . '/Configuration/test.less',
+            dirname(__DIR__) . '/Sniff/fixtures/args.less',
+            dirname(__DIR__) . '/Sniff/fixtures/bad_class.less',
+            dirname(__DIR__) . '/Sniff/fixtures/bad_colors.less',
+            dirname(__DIR__) . '/Sniff/fixtures/bad_variable.less',
+            dirname(__DIR__) . '/Sniff/fixtures/color_variants.less',
+            dirname(__DIR__) . '/Sniff/fixtures/comments.less',
+            dirname(__DIR__) . '/Sniff/fixtures/curly.less',
+            dirname(__DIR__) . '/Sniff/fixtures/empty.less',
+            dirname(__DIR__) . '/Sniff/fixtures/generated_class.less',
+            dirname(__DIR__) . '/Sniff/fixtures/indent.less',
+            dirname(__DIR__) . '/Sniff/fixtures/newlines.less',
+            dirname(__DIR__) . '/Sniff/fixtures/quotes.less',
+            dirname(__DIR__) . '/Sniff/fixtures/semicolon.less',
+        ], $files);
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage File "foo" is not a file.
+     */
+    public function testGetFileBadFile()
+    {
+        (new StandardConfiguration(Standard::loadFromXmlFile(__DIR__ . '/bad-file.xml')))->getFiles();
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Directory "bar" is not a directory.
+     */
+    public function testGetFileBadDir()
+    {
+        (new StandardConfiguration(Standard::loadFromXmlFile(__DIR__ . '/bad-dir.xml')))->getFiles();
     }
 }

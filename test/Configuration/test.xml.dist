@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<csssniffer>
+    <sniff rel="Hostnet" />
+
+    <file>./test.less</file>
+    <file>../Sniff/fixtures/args.less</file>
+    <directory>../Sniff/fixtures</directory>
+    <exclude-pattern>ids</exclude-pattern>
+</csssniffer>

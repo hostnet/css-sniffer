@@ -17,7 +17,10 @@ class StandardTest extends TestCase
         $standard = Standard::loadFromXmlFile(__DIR__ . '/fixtures/simple.xml.dist');
 
         self::assertEquals('simple', $standard->getName());
-        self::assertCount(1, $standard->getSniffs());
+        self::assertCount(2, $standard->getSniffs());
+        self::assertSame(['foo.css'], $standard->getFiles());
+        self::assertSame(['bar'], $standard->getDirectories());
+        self::assertSame(['`baz`i'], $standard->getExclusionPatterns());
     }
 
     public function testLoadFromXmlFileExtendRelative()
@@ -34,5 +37,23 @@ class StandardTest extends TestCase
 
         self::assertEquals('extend-default', $standard->getName());
         self::assertCount(12, $standard->getSniffs());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Cannot find standards file "foobar".
+     */
+    public function testLoadFromXmlFileBadStandard()
+    {
+        Standard::loadFromXmlFile('foobar');
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Missing class attribute for sniff.
+     */
+    public function testLoadFromXmlFileNoArgument()
+    {
+        Standard::loadFromXmlFile(__DIR__ . '/fixtures/no-argument.xml.dist');
     }
 }

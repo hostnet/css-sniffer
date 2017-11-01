@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
 <csssniffer>
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ArgsSniff" />
+    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff">
+        <arg>[a-z]+</arg>
+    </sniff>
+
+    <file>foo.css</file>
+    <directory>bar</directory>
+    <exclude-pattern>baz</exclude-pattern>
 </csssniffer>
