@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <csssniffer>
+
+    <description>Hostnet default CSS and LESS coding style.</description>
+
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ArgsSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\ColorSniff" />
@@ -12,4 +15,5 @@
     <sniff class="\Hostnet\Component\CssSniff\Sniff\QuoteTypeSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\SemicolonSniff" />
     <sniff class="\Hostnet\Component\CssSniff\Sniff\VariableSniff" />
+
 </csssniffer>

@@ -57,26 +57,18 @@ Help:
   Sniffs the given input file and returns the result.
 ```
 
-### Defining your own standard
-If you would like to create your own standard, you can do this by creating your own `xml` file and passing it with `-s` or `--standard`. An exmple of a standard file is:
+### Sniffing for CI
+The primary focus of the sniffer is to integrate with any CI tooling. For this, it is recommended to add a `csssniff.xml.dist` to your project root. This will allow you to configure which files and directories to process when running the sniffer. A common example would be:
 ```xml
 <?xml version="1.0"?>
 <csssniffer>
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\ArgsSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\ClassSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\ColorSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\CurlySniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyCommentSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptyLinesSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\EmptySniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\IdSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\IndentSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\QuoteTypeSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\SemicolonSniff" />
-    <sniff class="\Hostnet\Component\CssSniff\Sniff\VariableSniff" />
+    <directory>./app/styles</directory>
+
+    <sniff rel="Hostnet" />
 </csssniffer>
+
 ```
-But you can add your own classes, as long as they extend the [`SniffInterface`](https://github.com/hostnet/css-sniffer/blob/master/src/SniffInterface.php). Any arguments defined in the `xml` are passed as constructor arguments to the sniff.
+This would process the `app/styles` folder relative from the project root using the `Hostnet` standard. For more information about the xml structure, see [the ruleset configuration documentation](RULESETS.md).
 
 ### Output formatting
 Multiple output formats are supported. For now there is `console` (the default), `checkstyle` and `json`. The `json` output looks as follows:
