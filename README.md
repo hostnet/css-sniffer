@@ -11,7 +11,7 @@ The tool is pretty straight forward, simply run it with the file you would like 
 ```
 Simply run the tool and you will get the following output.
 ```
-$ bin/css-sniff sniff test/Sniff/fixtures/quotes.less
+$ vendor/bin/css-sniff sniff quotes.less
 
 FILE: test/Sniff/fixtures/quotes.less
 --------------------------------------------------------------------------------
@@ -29,8 +29,7 @@ Installation
 
 Documentation
 -------------
-The tool is still under heavy development, but if you are willing to give it a go follow the installtation instructions. There are various command line options for the tool.
-
+Basic usuage is as follows:
 ```
 $ vendor/bin/css-sniff --help
 Usage:
@@ -57,6 +56,12 @@ Help:
   Sniffs the given input file and returns the result.
 ```
 
+*Examples*:
+- `vendor/bin/css-sniff`
+- `vendor/bin/css-sniff sniff some/file.css`
+- `vendor/bin/css-sniff sniff --format=json -p some/file.css`
+- `cat some/file.css | vendor/bin/css-sniff sniff --stdin`
+
 ### Sniffing for CI
 The primary focus of the sniffer is to integrate with any CI tooling. For this, it is recommended to add a `csssniff.xml.dist` to your project root. This will allow you to configure which files and directories to process when running the sniffer. A common example would be:
 ```xml
@@ -73,7 +78,7 @@ This would process the `app/styles` folder relative from the project root using 
 ### Output formatting
 Multiple output formats are supported. For now there is `console` (the default), `checkstyle` and `json`. The `json` output looks as follows:
 ```
-$ bin/css-sniff sniff --format=json -p test/Sniff/fixtures/quotes.less
+$ vendor/bin/css-sniff sniff --format=json -p test/Sniff/fixtures/quotes.less
 {
     "totals": {
         "errors": 0
@@ -111,7 +116,7 @@ $ bin/css-sniff sniff --format=json -p test/Sniff/fixtures/quotes.less
 ### `STDIN` input
 The sniffer can also read from the `STDIN`. This can be usefull when intergrating the tool in an IDE where you might not have a file but want to pass the contents of an editor. Make sure to add the `--stdin` to tell the sniffer to read the `STDIN`. You can also pass a file to allows for you matching rules to work.
 ```
-$ cat test/Sniff/fixtures/quotes.less | bin/css-sniff sniff --format=json -p --stdin test/Sniff/fixtures/quotes.less
+$ cat test/Sniff/fixtures/quotes.less | vendor/bin/css-sniff sniff --format=json -p --stdin test/Sniff/fixtures/quotes.less
 {
     "totals": {
         "errors": 0
