@@ -31,22 +31,24 @@ class StandardConfigurationTest extends TestCase
         }, $this->null_configuration->getFiles());
 
         sort($files);
+        
+        $ds = DIRECTORY_SEPARATOR;
 
         self::assertEquals([
-            dirname(__DIR__) . '/Configuration/test.less',
-            dirname(__DIR__) . '/Sniff/fixtures/args.less',
-            dirname(__DIR__) . '/Sniff/fixtures/bad_class.less',
-            dirname(__DIR__) . '/Sniff/fixtures/bad_colors.less',
-            dirname(__DIR__) . '/Sniff/fixtures/bad_variable.less',
-            dirname(__DIR__) . '/Sniff/fixtures/color_variants.less',
-            dirname(__DIR__) . '/Sniff/fixtures/comments.less',
-            dirname(__DIR__) . '/Sniff/fixtures/curly.less',
-            dirname(__DIR__) . '/Sniff/fixtures/empty.less',
-            dirname(__DIR__) . '/Sniff/fixtures/generated_class.less',
-            dirname(__DIR__) . '/Sniff/fixtures/indent.less',
-            dirname(__DIR__) . '/Sniff/fixtures/newlines.less',
-            dirname(__DIR__) . '/Sniff/fixtures/quotes.less',
-            dirname(__DIR__) . '/Sniff/fixtures/semicolon.less',
+            dirname(__DIR__) . $ds . 'Configuration'. $ds . 'test.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'args.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'bad_class.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'bad_colors.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'bad_variable.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'color_variants.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'comments.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'curly.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'empty.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'generated_class.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'indent.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'newlines.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'quotes.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'semicolon.less',
         ], $files);
     }
 

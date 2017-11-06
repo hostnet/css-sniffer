@@ -106,6 +106,40 @@ final class CurlySniff implements SniffInterface
                 $token->offsets[0] + strlen($token->chars)
             );
             return;
+        } else {
+            try {
+                $whitespace = $file->get($stack_ptr + 1)->chars;
+            } catch (\OutOfRangeException $e) {
+                return;
+            }
+
+            // Make sure there is a return after the first curly.
+            if (false === strpos($whitespace, "\n")) {
+                $file->addViolation(
+                    self::class,
+                    'Statement found on same line as opening bracket when expected on new line.',
+                    $token->lines[0],
+                    $token->offsets[0],
+                    $token->offsets[0] + strlen($token->chars)
+                );
+                return;
+            }
+
+            // Make sure there is a return before the end of the last curly.
+            $whitespace = $file->get($closing_curly_index - 1)->chars;
+
+            if (false === strpos($whitespace, "\n")) {
+                $close_curly = $file->get($closing_curly_index);
+
+                $file->addViolation(
+                    self::class,
+                    'Statement found on same line as closing bracket when expected on new line.',
+                    $close_curly->lines[0],
+                    $close_curly->offsets[0],
+                    $close_curly->offsets[0] + strlen($close_curly->chars)
+                );
+                return;
+            }
         }
     }
 
