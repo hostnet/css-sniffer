@@ -23,5 +23,10 @@
     },
     "bin": [
         "bin/css-sniff"
-    ]
+    ],
+    "archive": {
+        "exclude": [
+            "/test"
+        ]
+    }
 }

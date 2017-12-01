@@ -23,7 +23,7 @@ final class IndentSniff implements SniffInterface
         $token = $file->get($stack_ptr);
 
         // did we use spaces?
-        if (false !== strpos($token->chars, "\t")) {
+        if (false !== strpos($token->chars, "\t") && 1 === preg_match('/[\n\r\f]+/', $token->chars)) {
             $file->addViolation(
                 self::class,
                 'Line contains tabs, use only spaces.',
