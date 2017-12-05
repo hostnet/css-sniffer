@@ -32,7 +32,9 @@ final class CurlySniff implements SniffInterface
         if ($stack_ptr > 1) {
             $before = $file->get($stack_ptr - 1);
 
-            if ($before->type !== Token::T_WHITESPACE || $before->chars !== ' ') {
+            if ($before->type !== Token::T_OPENBRACKET &&
+                ($before->type !== Token::T_WHITESPACE || $before->chars !== ' ')
+            ) {
                 $file->addViolation(
                     self::class,
                     'There must be one space before a curly bracket.',
