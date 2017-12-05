@@ -56,6 +56,9 @@ class CurlySniffTest extends TestCase
             ),
             new Violation(CurlySniff::class, 'Media query should always be one multiple lines.', 36, 50, 51),
             new Violation(CurlySniff::class, 'Media query should always be one multiple lines.', 37, 52, 53),
+            new Violation(CurlySniff::class, 'There must be one space before a curly bracket.', 38, 6, 7),
+            new Violation(CurlySniff::class, 'There must be one space before a curly bracket.', 39, 8, 9),
+            new Violation(CurlySniff::class, 'There must be one space before a curly bracket.', 41, 1, 2),
         ], $file->getViolations());
     }
 }

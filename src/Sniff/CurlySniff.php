@@ -28,6 +28,22 @@ final class CurlySniff implements SniffInterface
 
         $token = $file->get($stack_ptr);
 
+        // check the token before
+        if ($stack_ptr > 1) {
+            $before = $file->get($stack_ptr - 1);
+
+            if ($before->type !== Token::T_WHITESPACE || $before->chars !== ' ') {
+                $file->addViolation(
+                    self::class,
+                    'There must be one space before a curly bracket.',
+                    $token->lines[0],
+                    $token->offsets[0],
+                    $token->offsets[0] + strlen($token->chars)
+                );
+                return;
+            }
+        }
+
         // do we have one line?
         [
             $contains_returns,
