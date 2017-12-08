@@ -59,7 +59,9 @@ The CSS sniffer comes with some built-in sniffs which can be configured using ar
 For a full list of all supported elements and attributes is a fully annotated ruleset. Everything shown is supported by the css sniffer tool.
 ```xml
 <?xml version="1.0"?>
-<csssniffer>
+<csssniffer
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="https://hostnet.github.io/css-sniffer/2.0/schema.xsd">
 
     <!--
         Description of the ruleset. This is never shown anywhere but can give
