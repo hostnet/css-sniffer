@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="csssniffer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="description"/>
+        <xs:element ref="file"/>
+        <xs:element ref="directory"/>
+        <xs:element ref="exclude-pattern"/>
+        <xs:element maxOccurs="unbounded" ref="sniff"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="file" type="xs:string"/>
+  <xs:element name="directory" type="xs:string"/>
+  <xs:element name="sniff">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="exclude-pattern"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="arg"/>
+      </xs:choice>
+      <xs:attribute name="class"/>
+      <xs:attribute name="rel"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="arg" type="xs:NCName"/>
+  <xs:element name="exclude-pattern" type="xs:string"/>
+</xs:schema>
+
