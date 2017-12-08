@@ -1,0 +1,83 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="arg" type="xs:string"/>
+    <xs:element name="exclude-pattern" type="xs:string"/>
+    <xs:element name="description" type="xs:string"/>
+    <xs:element name="file" type="xs:string"/>
+    <xs:element name="directory" type="xs:string"/>
+    <xs:element name="sniff">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element ref="arg" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element ref="exclude-pattern" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="rel" use="optional"/>
+            <xs:attribute type="xs:string" name="class" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="csssniffer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="description" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Description of the ruleset. This is never shown anywhere but can give
+                            extra information about the type of sniffs configured.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="file" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Add a file to the list of files to be processed.
+
+                            Files should be relative to the directory the ruleset file is in.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="directory" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Add a directory to the sniff to be processed. This will recursively
+                            scan all files for matching extensions and will add them to the list of
+                            files to be processed.
+
+                            Directories should be relative to the directory the ruleset file is in.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="exclude-pattern" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            A global exclusion pattern which can be added to exclude files or
+                            directories from all sniffs. This will prevent sniffs from processing
+                            any matched file.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="sniff" maxOccurs="unbounded" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Import an external ruleset. This can be one of the defaults (i.e.,
+                            "Hostnet") or can refer to another file. This will include all sniffs
+                            and configuration from that file.
+
+                            Any reference to file are relative to the directory the ruleset file is
+                            in.
+
+                            Include a sniff in this rule. This will apply the sniff to any matched
+                            files.
+
+                            Some sniffs can have arguments to allow more fine-grained options.
+                            These are passed as constructor arguments in-order.
+
+                            Exclusion patterns can be added to exclude files or directories from a
+                            certain sniff. This will prevent the sniff from processing any matched
+                            file.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+
