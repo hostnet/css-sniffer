@@ -20,12 +20,18 @@ FOUND 1 ERROR(S) AFFECTING 1 LINE(S)
  2 | Text should use " as quotes.
 --------------------------------------------------------------------------------
 ```
+> Some builtin sniffs are pretty opinionated. If you disagree you have two options: open an issue to change the current behavior or write your own sniff.
 
 Installation
 ------------
- * `$ composer require --dev hostnet/css-sniffer`
- * This library follows [semantic versioning](http://semver.org/) strictly.
-> For now, we only have a composer installation. A single-file-executable is planned for the future.
+**Using phar (recommended)**
+
+Download the phar that is attached to the [latest release of the sniffer](https://github.com/hostnet/css-sniffer/releases).
+
+**Using composer**
+
+* `$ composer require --dev hostnet/css-sniffer`
+* This library follows [semantic versioning](http://semver.org/) strictly.
 
 Documentation
 -------------
