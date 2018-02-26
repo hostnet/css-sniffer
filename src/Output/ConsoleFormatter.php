@@ -55,7 +55,7 @@ final class ConsoleFormatter implements FormatterInterface
             );
             $out .= "--------------------------------------------------------------------------------\n";
 
-            $size = array_reduce($violations, function (int $total, Violation $v) {
+            $size         = array_reduce($violations, function (int $total, Violation $v) {
                 return max($total, strlen((string) $v->getLine()));
             }, 0);
             $message_size = 80 - ($size + 4);

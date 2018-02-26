@@ -65,6 +65,7 @@ class ColorSniffTest extends TestCase
             new Violation(ColorSniff::class, 'Colors should always be 6 characters hex values.', 13, 17, 21),
             new Violation(ColorSniff::class, 'Colors should always be 6 characters hex values.', 14, 23, 27),
             new Violation(ColorSniff::class, 'Colors should always be 6 characters hex values.', 15, 17, 21),
+            new Violation(ColorSniff::class, 'Colors should always be 6 characters hex values.', 36, 26, 30),
         ], $file->getViolations());
     }
 }

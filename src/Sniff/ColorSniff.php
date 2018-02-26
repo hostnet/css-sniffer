@@ -35,9 +35,13 @@ final class ColorSniff implements SniffInterface
         $token = $file->get($stack_ptr);
 
         if (in_array($token->chars, self::CSS_RULES, true) || 1 === preg_match('/-color$/', $token->chars)) {
-            $t = $file->findNext(Token::T_WORD, $stack_ptr + 1);
+            $end_of_line = $file->findNext(Token::T_SEMICOLON, $stack_ptr + 1);
+            $t           = $file->findNext(Token::T_WORD, $stack_ptr + 1);
 
-            if (null !== $t && $t->chars[0] === '#' && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)) {
+            if ($this->isBefore($t, $end_of_line)
+                && $t->chars[0] === '#'
+                && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)
+            ) {
                 $file->addViolation(
                     self::class,
                     'Colors should always be 6 characters hex values.',
@@ -47,5 +51,18 @@ final class ColorSniff implements SniffInterface
                 );
             }
         }
+    }
+
+    private function isBefore(?Token $token, ?Token $ref): bool
+    {
+        if (null === $token) {
+            return false;
+        }
+
+        if (null === $ref) {
+            return true;
+        }
+
+        return $token->lines[0] <= $ref->lines[0] && $token->offsets[0] <= max($ref->offsets);
     }
 }
