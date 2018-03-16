@@ -101,14 +101,22 @@ final class ColonSniff implements SniffInterface
     private function isProperty(File $file, int $stack_ptr): bool
     {
         $tokens = $file->getTokens();
-        $found = [];
+        $found  = [];
 
         for ($i = $stack_ptr + 1, $n = count($tokens); $i < $n; $i++) {
             if ($tokens[$i]->type === Token::T_WHITESPACE) {
                 continue;
             }
 
-            if (\in_array($tokens[$i]->type, [Token::T_WORD, Token::T_OPENBRACKET, Token::T_OPENSQUARE, Token::T_CLOSESQUARE, Token::T_ATWORD], true)) {
+            $allowed_tokens = [
+                Token::T_WORD,
+                Token::T_OPENBRACKET,
+                Token::T_OPENSQUARE,
+                Token::T_CLOSESQUARE,
+                Token::T_ATWORD
+            ];
+
+            if (\in_array($tokens[$i]->type, $allowed_tokens, true)) {
                 $found[] = $tokens[$i];
                 continue;
             }
