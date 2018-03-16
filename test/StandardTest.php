@@ -30,7 +30,7 @@ class StandardTest extends TestCase
         $standard = Standard::loadFromXmlFile(__DIR__ . '/fixtures/extend-relative.xml.dist');
 
         self::assertEquals('extend-relative', $standard->getName());
-        self::assertCount(12, $standard->getSniffs());
+        self::assertCount(13, $standard->getSniffs());
     }
 
     public function testLoadFromXmlFileExtendDefault()
@@ -40,7 +40,7 @@ class StandardTest extends TestCase
         $sniffs = $standard->getSniffs();
 
         self::assertEquals('extend-default', $standard->getName());
-        self::assertCount(12, $sniffs);
+        self::assertCount(13, $sniffs);
         self::assertEquals(new SniffConfiguration(new ArgsSniff(), ['`color\.less`i']), $sniffs[0]);
         self::assertEquals(new SniffConfiguration(new ClassSniff('[a-z]+'), []), $sniffs[1]);
     }

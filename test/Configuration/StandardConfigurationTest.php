@@ -31,7 +31,7 @@ class StandardConfigurationTest extends TestCase
         }, $this->null_configuration->getFiles());
 
         sort($files);
-        
+
         $ds = DIRECTORY_SEPARATOR;
 
         self::assertEquals([
@@ -40,6 +40,7 @@ class StandardConfigurationTest extends TestCase
             dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'bad_class.less',
             dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'bad_colors.less',
             dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'bad_variable.less',
+            dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'colons.less',
             dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'color_variants.less',
             dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'comments.less',
             dirname(__DIR__) . $ds . 'Sniff'. $ds . 'fixtures' . $ds. 'curly.less',
