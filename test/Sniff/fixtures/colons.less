@@ -7,3 +7,18 @@
 .other ::after {}
 .other:first-child {}
 .other:nth-last-child(2) {}
+
+nav ul {
+    &:extend(.inline);
+    background: blue;
+}
+.inline {
+    color: red;
+}
+
+@detached-ruleset: { background: red; };
+
+// use detached ruleset
+.top {
+    @detached-ruleset();
+}

@@ -62,6 +62,14 @@ final class ColonSniff implements SniffInterface
         'visited',
     ];
 
+    /**
+     * @var string[]
+     * @see http://lesscss.org/features/#extend-feature
+     */
+    private const PSEUDO_CLASSES_LESS = [
+        'extend',
+    ];
+
     public function register(): array
     {
         return [
@@ -144,6 +152,7 @@ final class ColonSniff implements SniffInterface
             return false;
         }
 
-        return $first->type === Token::T_WORD && \in_array($first->chars, self::PSEUDO_CLASSES, true);
+        return $first->type === Token::T_WORD
+            && \in_array($first->chars, array_merge(self::PSEUDO_CLASSES, self::PSEUDO_CLASSES_LESS), true);
     }
 }
