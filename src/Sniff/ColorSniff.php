@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Sniff;
 
@@ -34,23 +34,27 @@ final class ColorSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (in_array($token->chars, self::CSS_RULES, true) || 1 === preg_match('/-color$/', $token->chars)) {
-            $end_of_line = $file->findNext(Token::T_SEMICOLON, $stack_ptr + 1);
-            $t           = $file->findNext(Token::T_WORD, $stack_ptr + 1);
-
-            if ($this->isBefore($t, $end_of_line)
-                && $t->chars[0] === '#'
-                && 1 !== preg_match('/^#[0-9a-f]{6}$/', $t->chars)
-            ) {
-                $file->addViolation(
-                    self::class,
-                    'Colors should always be 6 characters hex values.',
-                    $t->lines[0],
-                    $t->offsets[0],
-                    $t->offsets[0] + strlen($t->chars)
-                );
-            }
+        if (!in_array($token->chars, self::CSS_RULES, true) && 1 !== preg_match('/-color$/', $token->chars)) {
+            return;
         }
+
+        $end_of_line = $file->findNext(Token::T_SEMICOLON, $stack_ptr + 1);
+        $t           = $file->findNext(Token::T_WORD, $stack_ptr + 1);
+
+        if (!$this->isBefore($t, $end_of_line)
+            || $t->chars[0] !== '#'
+            || 1 === preg_match('/^#[0-9a-f]{6}$/', $t->chars)
+        ) {
+            return;
+        }
+
+        $file->addViolation(
+            self::class,
+            'Colors should always be 6 characters hex values.',
+            $t->lines[0],
+            $t->offsets[0],
+            $t->offsets[0] + strlen($t->chars)
+        );
     }
 
     private function isBefore(?Token $token, ?Token $ref): bool

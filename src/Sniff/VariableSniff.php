@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Sniff;
 
@@ -23,14 +23,16 @@ final class VariableSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (1 !== preg_match('/^@[a-z0-9_-]*$/', $token->chars)) {
-            $file->addViolation(
-                self::class,
-                'Variable should only contain a-z, 0-9, _ and -.',
-                $token->lines[0],
-                $token->offsets[0],
-                $token->offsets[0] + strlen($token->chars)
-            );
+        if (1 === preg_match('/^@[a-z0-9_-]*$/', $token->chars)) {
+            return;
         }
+
+        $file->addViolation(
+            self::class,
+            'Variable should only contain a-z, 0-9, _ and -.',
+            $token->lines[0],
+            $token->offsets[0],
+            $token->offsets[0] + strlen($token->chars)
+        );
     }
 }

@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Sniff;
 
 use Hostnet\Component\CssSniff\File;
@@ -37,16 +38,18 @@ final class EmptyCommentSniff implements SniffInterface
             }, explode("\n", $matches[1]))));
         }
 
-        if ('' === $comment) {
-            $lines = explode("\n", $token->chars);
-
-            $file->addViolation(
-                self::class,
-                'Empty comment.',
-                $token->lines[0],
-                $token->offsets[0],
-                $token->offsets[0] + strlen(trim($lines[0]))
-            );
+        if ('' !== $comment) {
+            return;
         }
+
+        $lines = explode("\n", $token->chars);
+
+        $file->addViolation(
+            self::class,
+            'Empty comment.',
+            $token->lines[0],
+            $token->offsets[0],
+            $token->offsets[0] + strlen(trim($lines[0]))
+        );
     }
 }

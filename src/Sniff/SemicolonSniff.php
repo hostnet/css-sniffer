@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Sniff;
 
 use Hostnet\Component\CssSniff\File;
@@ -26,14 +27,16 @@ final class SemicolonSniff implements SniffInterface
             return;
         }
 
-        if ($next->type === Token::T_SEMICOLON) {
-            $file->addViolation(
-                self::class,
-                'Duplicate semicolon.',
-                $next->lines[0],
-                $next->offsets[0],
-                $next->offsets[0] + strlen($next->chars)
-            );
+        if ($next->type !== Token::T_SEMICOLON) {
+            return;
         }
+
+        $file->addViolation(
+            self::class,
+            'Duplicate semicolon.',
+            $next->lines[0],
+            $next->offsets[0],
+            $next->offsets[0] + strlen($next->chars)
+        );
     }
 }

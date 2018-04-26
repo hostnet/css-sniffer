@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Sniff;
 
 use Hostnet\Component\CssSniff\File;
@@ -40,17 +41,19 @@ final class IndentSniff implements SniffInterface
         $parts = preg_split('/[\n\r\f]+/', $token->chars);
 
         for ($i = 0, $n = count($parts); $i < $n; $i++) {
-            if (strlen($parts[$i]) % 4 !== 0) {
-                $file->addViolation(
-                    self::class,
-                    sprintf(
-                        'Line not indented correctly, expected %s, got %s.',
-                        ceil(strlen($parts[$i]) / 4) * 4,
-                        strlen($parts[$i])
-                    ),
-                    $token->lines[0] + $i
-                );
+            if (strlen($parts[$i]) % 4 === 0) {
+                continue;
             }
+
+            $file->addViolation(
+                self::class,
+                sprintf(
+                    'Line not indented correctly, expected %s, got %s.',
+                    ceil(strlen($parts[$i]) / 4) * 4,
+                    strlen($parts[$i])
+                ),
+                $token->lines[0] + $i
+            );
         }
     }
 }

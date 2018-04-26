@@ -3,6 +3,7 @@
  * @copyright 2017 Hostnet B.V.
  */
 declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Output;
 
 use Hostnet\Component\CssSniff\File;
@@ -39,8 +40,8 @@ class ConsoleFormatterTest extends TestCase
         $file = new File('phpunit', []);
         $file->addViolation(
             'phpunit',
-            'this is a very long violoation message which require to be split into multple lines so that it can be '.
-            'read more properly without overflowing to outside of the table. Because if it would do that it becomes '.
+            'this is a very long violoation message which require to be split into multple lines so that it can be ' .
+            'read more properly without overflowing to outside of the table. Because if it would do that it becomes ' .
             'very difficult to read on smaller screens.',
             1
         );

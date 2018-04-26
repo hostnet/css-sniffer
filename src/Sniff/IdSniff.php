@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Sniff;
 
@@ -23,23 +23,27 @@ final class IdSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if ($token->chars[0] === '#') {
-            $id = $token->chars;
-
-            // is there a class?
-            if (false !== ($i = strpos($id, '.'))) {
-                $id = substr($id, 0, $i);
-            }
-
-            if (1 !== preg_match('/^\#[a-z0-9-]+$/', $id)) {
-                $file->addViolation(
-                    self::class,
-                    'Id should only contain a-z, 0-9 and -.',
-                    $token->lines[0],
-                    $token->offsets[0],
-                    $token->offsets[0] + strlen($id)
-                );
-            }
+        if ($token->chars[0] !== '#') {
+            return;
         }
+
+        $id = $token->chars;
+
+        // is there a class?
+        if (false !== ($i = strpos($id, '.'))) {
+            $id = substr($id, 0, $i);
+        }
+
+        if (1 === preg_match('/^\#[a-z0-9-]+$/', $id)) {
+            return;
+        }
+
+        $file->addViolation(
+            self::class,
+            'Id should only contain a-z, 0-9 and -.',
+            $token->lines[0],
+            $token->offsets[0],
+            $token->offsets[0] + strlen($id)
+        );
     }
 }

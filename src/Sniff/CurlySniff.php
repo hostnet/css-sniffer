@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Sniff;
 
 use Hostnet\Component\CssSniff\File;
@@ -51,7 +52,7 @@ final class CurlySniff implements SniffInterface
             $contains_returns,
             $contains_multiple_statements,
             $is_media_query,
-            $closing_curly_index
+            $closing_curly_index,
         ] = $this->isOneLine($file, $stack_ptr);
 
         $last_token = $file->get($closing_curly_index);
@@ -251,7 +252,7 @@ final class CurlySniff implements SniffInterface
             $contains_returns,
             $contains_multiple_statements,
             1 === preg_match('/^@media\s/', trim($line)),
-            $closing_curly_index
+            $closing_curly_index,
         ];
     }
 

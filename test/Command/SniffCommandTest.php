@@ -3,6 +3,7 @@
  * @copyright 2017 Hostnet B.V.
  */
 declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Command;
 
 use PHPUnit\Framework\TestCase;

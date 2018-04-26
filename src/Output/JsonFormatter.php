@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Output;
 
 use Hostnet\Component\CssSniff\Violation;
@@ -26,9 +27,9 @@ final class JsonFormatter implements FormatterInterface
     {
         $result = [
             'totals' => [
-                'errors' => 0
+                'errors' => 0,
             ],
-            'files' => []
+            'files' => [],
         ];
 
         foreach ($files as $file) {
@@ -47,7 +48,7 @@ final class JsonFormatter implements FormatterInterface
                         'line'    => $v->getLine(),
                         'column'  => $v->getStart(),
                     ];
-                }, $violations)
+                }, $violations),
             ];
         }
 

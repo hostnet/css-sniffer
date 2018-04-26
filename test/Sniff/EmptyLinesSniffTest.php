@@ -3,6 +3,7 @@
  * @copyright 2017 Hostnet B.V.
  */
 declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Sniff;
 
 use Hostnet\Component\CssSniff\File;

@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Sniff;
 
@@ -121,7 +121,7 @@ final class ColonSniff implements SniffInterface
                 Token::T_OPENBRACKET,
                 Token::T_OPENSQUARE,
                 Token::T_CLOSESQUARE,
-                Token::T_ATWORD
+                Token::T_ATWORD,
             ];
 
             if (\in_array($tokens[$i]->type, $allowed_tokens, true)) {

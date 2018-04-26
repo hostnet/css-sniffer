@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Sniff;
 
@@ -23,14 +23,16 @@ final class EmptySniff implements SniffInterface
     {
         $next = $file->findNextNot(Token::T_WHITESPACE, $stack_ptr + 1);
 
-        if (null !== $next && $next->type === Token::T_CLOSECURLY) {
-            $file->addViolation(
-                self::class,
-                'CSS block should not be empty.',
-                $next->lines[0],
-                $next->offsets[0],
-                $next->offsets[0] + strlen($next->chars)
-            );
+        if (null === $next || $next->type !== Token::T_CLOSECURLY) {
+            return;
         }
+
+        $file->addViolation(
+            self::class,
+            'CSS block should not be empty.',
+            $next->lines[0],
+            $next->offsets[0],
+            $next->offsets[0] + strlen($next->chars)
+        );
     }
 }

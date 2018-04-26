@@ -20,6 +20,15 @@ matrix:
     - php: 7.1
       script: vendor/bin/phpcs -n
       env: PHPCS_BUILD=1
+    - php: 7.2
+      env: COMPOSER_FLAGS="--prefer-lowest"
+    - php: 7.2
+      env: COMPOSER_FLAGS="--prefer-stable"
+    - php: 7.2
+      env: COMPOSER_FLAGS=""
+    - php: 7.2
+      script: vendor/bin/phpcs -n
+      env: PHPCS_BUILD=1
 
 install: composer update $COMPOSER_FLAGS --prefer-dist
 

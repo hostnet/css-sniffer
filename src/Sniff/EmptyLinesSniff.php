@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\CssSniff\Sniff;
 
 use Hostnet\Component\CssSniff\File;
@@ -33,12 +34,14 @@ final class EmptyLinesSniff implements SniffInterface
     {
         $token = $file->get($stack_ptr);
 
-        if (substr_count($token->chars, $this->newline_char) > 2) {
-            $file->addViolation(
-                self::class,
-                'More than two new lines found.',
-                $token->lines[0]
-            );
+        if (substr_count($token->chars, $this->newline_char) <= 2) {
+            return;
         }
+
+        $file->addViolation(
+            self::class,
+            'More than two new lines found.',
+            $token->lines[0]
+        );
     }
 }

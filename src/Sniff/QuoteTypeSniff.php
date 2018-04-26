@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
 
 namespace Hostnet\Component\CssSniff\Sniff;
 
@@ -36,14 +36,16 @@ final class QuoteTypeSniff implements SniffInterface
             return;
         }
 
-        if ($token->chars[0] !== $this->quote || $token->chars[strlen($token->chars) - 1] !== $this->quote) {
-            $file->addViolation(
-                self::class,
-                sprintf('Text should use %s as quotes.', $this->quote),
-                $token->lines[0],
-                $token->offsets[0],
-                $token->offsets[0] + strlen($token->chars)
-            );
+        if ($token->chars[0] === $this->quote && $token->chars[strlen($token->chars) - 1] === $this->quote) {
+            return;
         }
+
+        $file->addViolation(
+            self::class,
+            sprintf('Text should use %s as quotes.', $this->quote),
+            $token->lines[0],
+            $token->offsets[0],
+            $token->offsets[0] + strlen($token->chars)
+        );
     }
 }
