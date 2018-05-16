@@ -25,7 +25,7 @@ final class CliConfiguration implements SnifferConfigurationInterface
 
         foreach ($this->file_names as $file) {
             if (is_dir($file)) {
-                /* @var $child \SplFileInfo */
+                /** @var \SplFileInfo $child */
                 foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($file)) as $child) {
                     $name = $child->__toString();
 

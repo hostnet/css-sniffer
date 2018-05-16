@@ -44,7 +44,7 @@ final class StandardConfiguration implements SnifferConfigurationInterface
                 throw new \LogicException(sprintf('Directory "%s" is not a directory.', $directory));
             }
 
-            /* @var $child \SplFileInfo */
+            /** @var \SplFileInfo $child */
             foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $child) {
                 $name = $child->__toString();
 
