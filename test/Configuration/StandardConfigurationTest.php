@@ -42,6 +42,7 @@ class StandardConfigurationTest extends TestCase
             dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'bad_colors.less',
             dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'bad_variable.less',
             dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'colons.less',
+            dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'colons_angular.less',
             dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'color_variants.less',
             dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'comments.less',
             dirname(__DIR__) . $ds . 'Sniff' . $ds . 'fixtures' . $ds . 'curly.less',

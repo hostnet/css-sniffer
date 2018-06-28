@@ -70,6 +70,46 @@ final class ColonSniff implements SniffInterface
         'extend',
     ];
 
+    /**
+     * @var string[]
+     * @see https://angular.io/guide/component-styles
+     */
+    private const PSEUDO_CLASSES_ANGULAR = [
+        'host',
+        'host-context',
+    ];
+
+    /**
+     * List of options which can be configured.
+     */
+    private const PSEUDO_CLASS_OPTIONS = [
+        'css' => self::PSEUDO_CLASSES,
+        'less' => self::PSEUDO_CLASSES_LESS,
+        'angular' => self::PSEUDO_CLASSES_ANGULAR,
+    ];
+
+    /**
+     * @var string[]
+     */
+    private $pseudo_classes;
+
+    public function __construct(string $pseudo_classes = 'css,less')
+    {
+        $this->pseudo_classes = array_merge([], ...array_map(function (string $class) {
+            $class = trim($class);
+
+            if (!isset(self::PSEUDO_CLASS_OPTIONS[$class])) {
+                throw new \LogicException(sprintf(
+                    'Unknown pseudo classes for "%s", options are: "%s".',
+                    $class,
+                    implode('", "', array_keys(self::PSEUDO_CLASS_OPTIONS))
+                ));
+            }
+
+            return self::PSEUDO_CLASS_OPTIONS[$class];
+        }, explode(',', $pseudo_classes)));
+    }
+
     public function register(): array
     {
         return [
@@ -102,7 +142,7 @@ final class ColonSniff implements SniffInterface
             'Colon should be followed by a single space.',
             $t->lines[0],
             $t->offsets[0],
-            $t->offsets[0] + strlen($t->chars)
+            $t->offsets[0] + \strlen($t->chars)
         );
     }
 
@@ -152,7 +192,6 @@ final class ColonSniff implements SniffInterface
             return false;
         }
 
-        return $first->type === Token::T_WORD
-            && \in_array($first->chars, array_merge(self::PSEUDO_CLASSES, self::PSEUDO_CLASSES_LESS), true);
+        return $first->type === Token::T_WORD && \in_array($first->chars, $this->pseudo_classes, true);
     }
 }

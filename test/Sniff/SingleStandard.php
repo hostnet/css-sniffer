@@ -12,11 +12,15 @@ use Hostnet\Component\CssSniff\Standard;
 
 class SingleStandard
 {
-    public static function load(string $sniff): Standard
+    public static function load(string $sniff, array $args = []): Standard
     {
         $file = tempnam(sys_get_temp_dir(), 'test_standard_');
 
-        file_put_contents($file, sprintf('<csssniffer><sniff class="%s" /></csssniffer>', $sniff));
+        $sniff_args = array_reduce($args, function (string $carry, string $arg) {
+            return $carry . '<arg>' . $arg . '</arg>';
+        }, '');
+
+        file_put_contents($file, sprintf('<csssniffer><sniff class="%s">%s</sniff></csssniffer>', $sniff, $sniff_args));
 
         try {
             $standard = Standard::loadFromXmlFile($file);

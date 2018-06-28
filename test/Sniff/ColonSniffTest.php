@@ -42,4 +42,43 @@ class ColonSniffTest extends TestCase
             new Violation(ColonSniff::class, 'Colon should be followed by a single space.', 3, 11, 12),
         ], $file->getViolations());
     }
+
+    public function testSniffAngular()
+    {
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/colons_angular.less'))
+        );
+
+        $sniffer = new Sniffer();
+        $sniffer->loadStandard(SingleStandard::load(ColonSniff::class, ['css,angular']));
+        $sniffer->process([$file]);
+
+        self::assertEquals([], $file->getViolations());
+    }
+
+    public function testSniffAngularWithoutAngularClass()
+    {
+        $file = new File(
+            'phpunit',
+            (new Tokenizer())->tokenize(file_get_contents(__DIR__ . '/fixtures/colons_angular.less'))
+        );
+
+        $sniffer = new Sniffer();
+        $sniffer->loadStandard(SingleStandard::load(ColonSniff::class, ['css']));
+        $sniffer->process([$file]);
+
+        self::assertEquals([
+            new Violation(ColonSniff::class, 'Colon should be followed by a single space.', 1, 1, 2),
+        ], $file->getViolations());
+    }
+
+    public function testSniffBadClass()
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Unknown pseudo classes for "foo", options are:');
+
+        $sniffer = new Sniffer();
+        $sniffer->loadStandard(SingleStandard::load(ColonSniff::class, ['foo']));
+    }
 }
