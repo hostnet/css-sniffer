@@ -4,6 +4,7 @@
     "license":     "MIT",
     "require": {
         "php":                      ">=7.1",
+        "ext-json":                 "*",
         "symfony/console":          "^3.3||^4.0",
         "yannickl88/css-tokenizer": "^1.1.1"
     },
