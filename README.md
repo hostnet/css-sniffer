@@ -1,3 +1,7 @@
+**IMPORTANT:** Due to internal changes this repository will no longer be maintained. If you are using this, or have plans to use this, please consider an alternative like https://stylelint.io/.
+
+----------
+
 <p align="center"><a href="http://www.hostnet.nl" target="_blank">
     <img width="400" src="https://www.hostnet.nl/images/hostnet.svg">
 </a></p>
